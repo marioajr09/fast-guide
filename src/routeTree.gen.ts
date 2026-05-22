@@ -9,38 +9,120 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppSearchRouteImport } from './routes/app.search'
+import { Route as AppForgotRouteImport } from './routes/app.forgot'
+import { Route as AppFavoritesRouteImport } from './routes/app.favorites'
+import { Route as AppProcedureIdRouteImport } from './routes/app.procedure.$id'
 
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSearchRoute = AppSearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppForgotRoute = AppForgotRouteImport.update({
+  id: '/forgot',
+  path: '/forgot',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppFavoritesRoute = AppFavoritesRouteImport.update({
+  id: '/favorites',
+  path: '/favorites',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppProcedureIdRoute = AppProcedureIdRouteImport.update({
+  id: '/procedure/$id',
+  path: '/procedure/$id',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/app/favorites': typeof AppFavoritesRoute
+  '/app/forgot': typeof AppForgotRoute
+  '/app/search': typeof AppSearchRoute
+  '/app/': typeof AppIndexRoute
+  '/app/procedure/$id': typeof AppProcedureIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/app/favorites': typeof AppFavoritesRoute
+  '/app/forgot': typeof AppForgotRoute
+  '/app/search': typeof AppSearchRoute
+  '/app': typeof AppIndexRoute
+  '/app/procedure/$id': typeof AppProcedureIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/app/favorites': typeof AppFavoritesRoute
+  '/app/forgot': typeof AppForgotRoute
+  '/app/search': typeof AppSearchRoute
+  '/app/': typeof AppIndexRoute
+  '/app/procedure/$id': typeof AppProcedureIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/app/favorites'
+    | '/app/forgot'
+    | '/app/search'
+    | '/app/'
+    | '/app/procedure/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/app/favorites'
+    | '/app/forgot'
+    | '/app/search'
+    | '/app'
+    | '/app/procedure/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/app/favorites'
+    | '/app/forgot'
+    | '/app/search'
+    | '/app/'
+    | '/app/procedure/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,12 +130,76 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/search': {
+      id: '/app/search'
+      path: '/search'
+      fullPath: '/app/search'
+      preLoaderRoute: typeof AppSearchRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/forgot': {
+      id: '/app/forgot'
+      path: '/forgot'
+      fullPath: '/app/forgot'
+      preLoaderRoute: typeof AppForgotRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/favorites': {
+      id: '/app/favorites'
+      path: '/favorites'
+      fullPath: '/app/favorites'
+      preLoaderRoute: typeof AppFavoritesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/procedure/$id': {
+      id: '/app/procedure/$id'
+      path: '/procedure/$id'
+      fullPath: '/app/procedure/$id'
+      preLoaderRoute: typeof AppProcedureIdRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppFavoritesRoute: typeof AppFavoritesRoute
+  AppForgotRoute: typeof AppForgotRoute
+  AppSearchRoute: typeof AppSearchRoute
+  AppIndexRoute: typeof AppIndexRoute
+  AppProcedureIdRoute: typeof AppProcedureIdRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppFavoritesRoute: AppFavoritesRoute,
+  AppForgotRoute: AppForgotRoute,
+  AppSearchRoute: AppSearchRoute,
+  AppIndexRoute: AppIndexRoute,
+  AppProcedureIdRoute: AppProcedureIdRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
