@@ -30,7 +30,7 @@ const tabs: { key: Tab; label: string; icon: typeof Play }[] = [
 ];
 
 function ProcedurePage() {
-  const { proc } = Route.useLoaderData();
+  const { proc } = Route.useLoaderData() as { proc: Procedure };
   const { has, toggle } = useFavorites();
   const Icon = proc.icon;
   const [tab, setTab] = useState<Tab>("video");
