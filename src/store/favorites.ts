@@ -1,24 +1,37 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { useEffect, useState, useCallback } from "react";
 
-interface FavStore {
-  favorites: string[];
-  toggle: (id: string) => void;
-  has: (id: string) => boolean;
+const KEY = "esteti-favs";
+
+function read(): string[] {
+  if (typeof window === "undefined") return [];
+  try {
+    return JSON.parse(localStorage.getItem(KEY) ?? "[]");
+  } catch {
+    return [];
+  }
 }
 
-export const useFavorites = create<FavStore>()(
-  persist(
-    (set, get) => ({
-      favorites: [],
-      toggle: (id) =>
-        set((s) => ({
-          favorites: s.favorites.includes(id)
-            ? s.favorites.filter((f) => f !== id)
-            : [...s.favorites, id],
-        })),
-      has: (id) => get().favorites.includes(id),
-    }),
-    { name: "esteti-favs" }
-  )
-);
+export function useFavorites() {
+  const [favorites, setFavorites] = useState<string[]>([]);
+
+  useEffect(() => {
+    setFavorites(read());
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === KEY) setFavorites(read());
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
+
+  const toggle = useCallback((id: string) => {
+    setFavorites((prev) => {
+      const next = prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id];
+      localStorage.setItem(KEY, JSON.stringify(next));
+      return next;
+    });
+  }, []);
+
+  const has = useCallback((id: string) => favorites.includes(id), [favorites]);
+
+  return { favorites, toggle, has };
+}
