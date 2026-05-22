@@ -28,7 +28,6 @@ function Forgot() {
               key={p.id}
               to="/app/procedure/$id"
               params={{ id: p.id }}
-              search={{ from: "forgot" }}
               className="flex items-center justify-between rounded-2xl border border-border bg-card p-4 transition hover:border-primary/40"
             >
               <div className="flex items-center gap-3">
