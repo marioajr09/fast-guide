@@ -7,11 +7,11 @@ export const Route = createFileRoute("/app")({
 
 function AppShell() {
   const { pathname } = useLocation();
-  const tabs = [
+  const tabs: { to: "/app" | "/app/search" | "/app/favorites"; label: string; icon: typeof Home; exact?: boolean }[] = [
     { to: "/app", label: "Início", icon: Home, exact: true },
     { to: "/app/search", label: "Buscar", icon: Search },
     { to: "/app/favorites", label: "Favoritos", icon: Bookmark },
-  ] as const;
+  ];
 
   return (
     <div className="min-h-screen bg-background pb-24">

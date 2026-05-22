@@ -4,8 +4,10 @@ import { useState } from "react";
 import { procedures, forgotOptions, type ForgotKey } from "@/data/procedures";
 import { useFavorites } from "@/store/favorites";
 
+import type { Procedure } from "@/data/procedures";
+
 export const Route = createFileRoute("/app/procedure/$id")({
-  loader: ({ params }) => {
+  loader: ({ params }): { proc: Procedure } => {
     const proc = procedures.find((p) => p.id === params.id);
     if (!proc) throw notFound();
     return { proc };
