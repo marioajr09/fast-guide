@@ -21,7 +21,7 @@ function AppShell() {
             <div className="grid h-7 w-7 place-items-center rounded-lg bg-gradient-primary text-primary-foreground">
               <Sparkles className="h-3.5 w-3.5" />
             </div>
-            <span className="font-display text-base font-semibold">Fast Guide</span>
+            <span className="font-display text-base font-semibold">Estetiq</span>
           </Link>
           <span className="text-xs text-muted-foreground">MVP</span>
         </div>
