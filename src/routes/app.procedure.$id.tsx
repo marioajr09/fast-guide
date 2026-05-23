@@ -1,10 +1,11 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, Bookmark, Check, Play, AlertTriangle, Ban, Sliders, ListChecks, BookOpen } from "lucide-react";
 import { useState } from "react";
+import { VideoPlayer } from "@/components/VideoPlayer";
 import { procedures, forgotOptions, type ForgotKey } from "@/data/procedures";
 import { useFavorites } from "@/store/favorites";
 
-import type { Procedure } from "@/data/procedures";
+import type { Procedure, VideoSource } from "@/data/procedures";
 
 export const Route = createFileRoute("/app/procedure/$id")({
   loader: ({ params }): { proc: Procedure } => {
@@ -28,6 +29,36 @@ const tabs: { key: Tab; label: string; icon: typeof Play }[] = [
   { key: "errors", label: "Erros", icon: AlertTriangle },
   { key: "contra", label: "Contraind.", icon: Ban },
 ];
+
+function ProcedureVideo({ video, fallbackLength }: { video?: VideoSource; fallbackLength: string }) {
+  if (!video) {
+    return (
+      <div>
+        <div className="relative aspect-video overflow-hidden rounded-xl bg-gradient-to-br from-background to-card">
+          <div className="absolute inset-0 grid place-items-center">
+            <div className="grid h-16 w-16 place-items-center rounded-full bg-gradient-primary text-primary-foreground shadow-glow">
+              <Play className="h-7 w-7" fill="currentColor" />
+            </div>
+          </div>
+          <span className="absolute bottom-2 right-2 rounded-md bg-background/80 px-2 py-0.5 text-[11px] text-muted-foreground">
+            {fallbackLength}
+          </span>
+        </div>
+        <p className="mt-3 text-sm text-muted-foreground">
+          Cadastre uma URL do YouTube ou um arquivo local para liberar o player nesta aula.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <VideoPlayer
+      src={video.type === "youtube" ? video.url : video.src}
+      poster={video.type === "local" ? video.poster : undefined}
+      title={video.title ?? "Video do procedimento"}
+    />
+  );
+}
 
 function ProcedurePage() {
   const { proc } = Route.useLoaderData() as { proc: Procedure };
@@ -126,16 +157,7 @@ function ProcedurePage() {
       <div className="rounded-2xl border border-border bg-card p-4">
         {tab === "video" && (
           <div>
-            <div className="relative aspect-video overflow-hidden rounded-xl bg-gradient-to-br from-background to-card">
-              <div className="absolute inset-0 grid place-items-center">
-                <button className="grid h-16 w-16 place-items-center rounded-full bg-gradient-primary text-primary-foreground shadow-glow">
-                  <Play className="h-7 w-7" fill="currentColor" />
-                </button>
-              </div>
-              <span className="absolute bottom-2 right-2 rounded-md bg-background/80 px-2 py-0.5 text-[11px] text-muted-foreground">
-                {proc.info.videoLength}
-              </span>
-            </div>
+            <ProcedureVideo video={proc.info.video} fallbackLength={proc.info.videoLength} />
             <p className="mt-3 text-sm text-muted-foreground">
               Vídeo curto demonstrando a técnica completa. Microlearning de 20–40 segundos.
             </p>
