@@ -5,9 +5,9 @@ import { procedures } from "@/data/procedures";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Estetiq — Seu guia técnico de bolso para Estética" },
+      { title: "Fast Guide — Seu guia técnico de bolso para Estética" },
       { name: "description", content: "Consulta técnica instantânea durante procedimentos estéticos. Microlearning para alunos e profissionais de Estética e Cosmetologia." },
-      { property: "og:title", content: "Estetiq — Guia técnico de bolso" },
+      { property: "og:title", content: "Fast Guide — Guia técnico de bolso" },
       { property: "og:description", content: "Menos tempo procurando. Mais segurança executando." },
     ],
   }),
@@ -24,7 +24,7 @@ function Landing() {
             <div className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-primary text-primary-foreground">
               <Sparkles className="h-4 w-4" />
             </div>
-            <span className="font-display text-lg font-semibold tracking-tight">Estetiq</span>
+            <span className="font-display text-lg font-semibold tracking-tight">Fast Guide</span>
           </Link>
           <nav className="hidden gap-8 text-sm text-muted-foreground md:flex">
             <a href="#problema" className="hover:text-foreground">Problema</a>
@@ -55,7 +55,7 @@ function Landing() {
               <span className="text-gradient">Mais segurança executando.</span>
             </h1>
             <p className="mx-auto mt-6 max-w-xl text-base text-muted-foreground md:text-lg">
-              Estetiq é o seu guia técnico de bolso. Consulta instantânea de parâmetros, sequências e
+              Fast Guide é o seu guia técnico de bolso. Consulta instantânea de parâmetros, sequências e
               contraindicações durante a prática — em segundos, no celular.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -81,7 +81,7 @@ function Landing() {
               <div className="rounded-[2rem] bg-background p-5">
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
                   <span>9:41</span>
-                  <span>Estetiq</span>
+                  <span>Fast Guide</span>
                 </div>
                 <div className="mt-4 flex items-center gap-2 rounded-xl border border-border bg-card px-3 py-2.5 text-sm text-muted-foreground">
                   <Search className="h-4 w-4" /> Buscar procedimento…
@@ -239,7 +239,7 @@ function Landing() {
 
       <footer className="border-t border-border">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-6 text-xs text-muted-foreground">
-          <span>© {new Date().getFullYear()} Estetiq</span>
+          <span>© {new Date().getFullYear()} Fast Guide</span>
           <span>Feito para alunos e profissionais de Estética.</span>
         </div>
       </footer>

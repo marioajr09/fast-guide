@@ -6,12 +6,26 @@ export type ForgotKey = "parametros" | "sequencia" | "configuracao" | "movimento
 export interface QuickInfo {
   title: string;
   videoLength: string;
+  video?: VideoSource;
   tutorial: string[];
   checklist: string[];
   commonErrors: string[];
   contraindications: string[];
   parameters: { label: string; value: string }[];
 }
+
+export type VideoSource =
+  | {
+      type: "youtube";
+      url: string;
+      title?: string;
+    }
+  | {
+      type: "local";
+      src: string;
+      title?: string;
+      poster?: string;
+    };
 
 export interface Procedure {
   id: string;
@@ -32,6 +46,11 @@ export const procedures: Procedure[] = [
     info: {
       title: "Eletroterapia — Corrente Russa",
       videoLength: "00:32",
+      video: {
+        type: "local",
+        src: "/videos/eletroterapia.mp4",
+        title: "Demonstração de eletroterapia",
+      },
       tutorial: [
         "Higienize a área e posicione os eletrodos sobre o ventre muscular.",
         "Use gel condutor abundante para evitar resistência.",
