@@ -5,13 +5,13 @@ import { VideoPlayer } from "@/components/VideoPlayer";
 import { procedures, forgotOptions, type ForgotKey } from "@/data/procedures";
 import { useFavorites } from "@/store/favorites";
 
-import type { Procedure, VideoSource } from "@/data/procedures";
+import type { VideoSource } from "@/data/procedures";
 
 export const Route = createFileRoute("/app/procedure/$id")({
-  loader: ({ params }): { proc: Procedure } => {
+  loader: ({ params }): { procId: string } => {
     const proc = procedures.find((p) => p.id === params.id);
     if (!proc) throw notFound();
-    return { proc };
+    return { procId: proc.id };
   },
   component: ProcedurePage,
   notFoundComponent: () => (
@@ -61,7 +61,11 @@ function ProcedureVideo({ video, fallbackLength }: { video?: VideoSource; fallba
 }
 
 function ProcedurePage() {
-  const { proc } = Route.useLoaderData() as { proc: Procedure };
+  const { procId } = Route.useLoaderData() as { procId: string };
+  const proc = procedures.find((p) => p.id === procId);
+
+  if (!proc) throw notFound();
+
   const { has, toggle } = useFavorites();
   const Icon = proc.icon;
   const [tab, setTab] = useState<Tab>("video");
