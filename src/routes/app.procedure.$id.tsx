@@ -27,7 +27,7 @@ const tabs: { key: Tab; label: string; icon: typeof Play }[] = [
   { key: "checklist", label: "Checklist", icon: ListChecks },
   { key: "params", label: "Parâmetros", icon: Sliders },
   { key: "errors", label: "Erros", icon: AlertTriangle },
-  { key: "contra", label: "Contraindicações", icon: Ban },
+  { key: "contra", label: "Contraind.", icon: Ban },
 ];
 
 function ProcedureVideo({ video, fallbackLength }: { video?: VideoSource; fallbackLength: string }) {
@@ -73,9 +73,9 @@ function ProcedurePage() {
   const [checked, setChecked] = useState<Record<number, boolean>>({});
 
   const tabFromForgot = (k: ForgotKey): Tab => {
-    if (k === "parametros" || k === "joules" || k === "tempo") return "params";
+    if (k === "parametros" || k === "tempo") return "params";
     if (k === "sequencia") return "checklist";
-    if (k === "movimentos" || k === "configuracao") return "tutorial";
+    if (k === "configuracao") return "tutorial";
     return "tutorial";
   };
 
@@ -109,7 +109,7 @@ function ProcedurePage() {
       {/* O que você esqueceu? */}
       <div className="rounded-2xl border border-border bg-card p-4">
         <div className="text-xs uppercase tracking-widest text-muted-foreground">Atalhos rápidos</div>
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className="mt-3 grid grid-cols-2 gap-2">
           {forgotOptions.map((o) => (
             <button
               key={o.key}
@@ -161,7 +161,7 @@ function ProcedurePage() {
           <div>
             <ProcedureVideo video={proc.info.video} fallbackLength={proc.info.videoLength} />
             <p className="mt-3 text-sm text-muted-foreground">
-              Vídeo curto demonstrando a técnica completa. Microlearning de 20–40 segundos.
+              Vídeo curto demonstrando a técnica completa.
             </p>
           </div>
         )}
