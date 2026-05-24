@@ -206,7 +206,7 @@ function Landing() {
           {[
             { i: Clock, t: "Resposta em segundos", d: "Tempo médio de consulta de 8s." },
             // { i: ShieldCheck, t: "Conteúdo confiável", d: "Curado e revisado por especialistas." },
-            { i: Zap, t: "Microlearning", d: "Vídeos de 20–40s e tutoriais diretos." },
+            { i: Zap, t: "Microlearning", d: "Vídeos curtos e tutoriais diretos." },
             { i: BookmarkCheck, t: "Favoritos", d: "Salve o que você mais usa." },
           ].map((f) => (
             <div key={f.t} className="rounded-2xl border border-border bg-card p-5">

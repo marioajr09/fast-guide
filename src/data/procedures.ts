@@ -1,7 +1,7 @@
 import { Zap, Sun, Hand, Sparkles, Syringe, Radio } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
-export type ForgotKey = "parametros" | "sequencia" | "configuracao" | "movimentos" | "tempo" | "joules";
+export type ForgotKey = "parametros" | "tempo" | "sequencia" | "configuracao";
 
 export interface QuickInfo {
   title: string;
@@ -281,9 +281,7 @@ export const procedures: Procedure[] = [
 
 export const forgotOptions: { key: ForgotKey; label: string; hint: string }[] = [
   { key: "parametros", label: "Parâmetros", hint: "Frequência, intensidade, tempo" },
+  { key: "tempo", label: "Tempo e Dose", hint: "Duração por área e energia recomendada (Joules)" },
   { key: "sequencia", label: "Sequência", hint: "Ordem das etapas" },
-  { key: "configuracao", label: "Configuração", hint: "Como ajustar o aparelho" },
-  { key: "movimentos", label: "Movimentos", hint: "Manobras e direção" },
-  { key: "tempo", label: "Tempo", hint: "Duração por área" },
-  { key: "joules", label: "Joules / Dose", hint: "Energia recomendada" },
+  { key: "configuracao", label: "Configuração e movimentos", hint: "Como ajustar o aparelho, manobras e direção" },
 ];
