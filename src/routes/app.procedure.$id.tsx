@@ -27,7 +27,7 @@ const tabs: { key: Tab; label: string; icon: typeof Play }[] = [
   { key: "checklist", label: "Checklist", icon: ListChecks },
   { key: "params", label: "Parâmetros", icon: Sliders },
   { key: "errors", label: "Erros", icon: AlertTriangle },
-  { key: "contra", label: "Contraind.", icon: Ban },
+  { key: "contra", label: "Contraindicações", icon: Ban },
 ];
 
 function ProcedureVideo({ video, fallbackLength }: { video?: VideoSource; fallbackLength: string }) {
@@ -108,7 +108,7 @@ function ProcedurePage() {
 
       {/* O que você esqueceu? */}
       <div className="rounded-2xl border border-border bg-card p-4">
-        <div className="text-xs uppercase tracking-widest text-muted-foreground">O que você esqueceu?</div>
+        <div className="text-xs uppercase tracking-widest text-muted-foreground">Atalhos rápidos</div>
         <div className="mt-3 flex flex-wrap gap-2">
           {forgotOptions.map((o) => (
             <button
@@ -135,26 +135,24 @@ function ProcedurePage() {
       </div>
 
       {/* Tabs */}
-      <div className="-mx-5 overflow-x-auto px-5">
-        <div className="flex gap-2">
-          {tabs.map((t) => {
-            const TIcon = t.icon;
-            const active = tab === t.key;
-            return (
-              <button
-                key={t.key}
-                onClick={() => setTab(t.key)}
-                className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs transition ${
-                  active
-                    ? "border-primary bg-primary text-primary-foreground"
-                    : "border-border bg-card text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                <TIcon className="h-3.5 w-3.5" /> {t.label}
-              </button>
-            );
-          })}
-        </div>
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+        {tabs.map((t) => {
+          const TIcon = t.icon;
+          const active = tab === t.key;
+          return (
+            <button
+              key={t.key}
+              onClick={() => setTab(t.key)}
+              className={`inline-flex min-h-9 items-center justify-center gap-1.5 rounded-full border px-3 py-1.5 text-xs transition ${
+                active
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-border bg-card text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <TIcon className="h-3.5 w-3.5 shrink-0" /> <span className="truncate">{t.label}</span>
+            </button>
+          );
+        })}
       </div>
 
       {/* Tab content */}

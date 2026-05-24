@@ -43,7 +43,7 @@ function Landing() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-hero-glow" />
-        <div className="relative mx-auto max-w-6xl px-5 pb-24 pt-20 md:pt-28">
+        <div className="relative mx-auto max-w-6xl px-5 pb-12 pt-12 md:pt-12">
           <div className="mx-auto max-w-3xl text-center">
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1 text-xs text-muted-foreground">
               <span className="h-1.5 w-1.5 rounded-full bg-primary" />
@@ -59,27 +59,29 @@ function Landing() {
               contraindicações durante a prática — em segundos, no celular.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Link
+              {/* <Link
                 to="/app/forgot"
-                className="group inline-flex items-center gap-2 rounded-full bg-gradient-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-glow transition hover:opacity-95"
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-6 py-3 text-sm font-medium text-foreground hover:bg-card"
               >
                 Esqueci isso
                 <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
-              </Link>
+              </Link> */}
               <Link
                 to="/app"
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-6 py-3 text-sm font-medium text-foreground hover:bg-card"
+                className="group inline-flex items-center gap-2 rounded-full bg-gradient-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-glow transition hover:opacity-95"
               >
-                <PlayCircle className="h-4 w-4" /> Ver protótipo
+                <PlayCircle className="h-4 w-4" /> Abrir o app
+                <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
               </Link>
             </div>
           </div>
 
           {/* Mock phone */}
-          <div className="mx-auto mt-16 max-w-sm">
+          <div className="mx-auto mt-10 max-w-[280px] md:max-w-xs">
             <div className="relative rounded-[2.5rem] border border-border bg-card p-3 shadow-card">
               <div className="rounded-[2rem] bg-background p-5">
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  {/* Conhecimento de bola elite aqui */}
                   <span>9:41</span>
                   <span>Fast Guide</span>
                 </div>
@@ -111,7 +113,7 @@ function Landing() {
       </section>
 
       {/* Problema */}
-      <section id="problema" className="mx-auto max-w-6xl px-5 py-20">
+      <section id="problema" className="mx-auto max-w-6xl px-5 pb-20 pt-10">
         <div className="grid items-start gap-10 md:grid-cols-2">
           <div>
             <span className="text-xs uppercase tracking-widest text-muted-foreground">O problema</span>
@@ -150,7 +152,7 @@ function Landing() {
           </div>
           <div className="mt-10 grid gap-4 md:grid-cols-3">
             {[
-              { n: "01", t: "Toque em ‘Esqueci isso’", d: "Atalho gigante na tela inicial. Sem fricção." },
+              { n: "01", t: "Toque em ‘Esqueci isso’", d: "Atalho gigante na tela inicial." },
               { n: "02", t: "Escolha o procedimento", d: "Eletroterapia, LED, RF, Microagulhamento e mais." },
               { n: "03", t: "Receba a resposta", d: "Vídeo curto, checklist, parâmetros e contraindicações." },
             ].map((s) => (
@@ -165,13 +167,13 @@ function Landing() {
       </section>
 
       {/* Categorias */}
-      <section id="categorias" className="mx-auto max-w-6xl px-5 py-20">
+      <section id="categorias" className="mx-auto max-w-6xl px-5 pb-10 pt-20">
         <div className="flex items-end justify-between gap-4">
           <div>
             <span className="text-xs uppercase tracking-widest text-muted-foreground">Categorias</span>
             <h2 className="mt-3 font-display text-3xl font-semibold md:text-4xl">Tudo que você usa na prática.</h2>
           </div>
-          <Link to="/app" className="hidden text-sm text-muted-foreground hover:text-foreground md:inline">
+          <Link to="/app" className="text-sm font-medium text-primary transition hover:text-primary/80">
             Ver no app →
           </Link>
         </div>
@@ -179,11 +181,9 @@ function Landing() {
           {procedures.map((p) => {
             const Icon = p.icon;
             return (
-              <Link
+              <div
                 key={p.id}
-                to="/app/procedure/$id"
-                params={{ id: p.id }}
-                className="group flex items-center justify-between rounded-2xl border border-border bg-card p-5 transition hover:border-primary/40 hover:shadow-glow"
+                className="flex items-center rounded-2xl border border-border bg-card p-5 transition hover:bg-card/60"
               >
                 <div className="flex items-center gap-4">
                   <div className={`grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br ${p.color} text-white`}>
@@ -194,19 +194,18 @@ function Landing() {
                     <div className="text-xs text-muted-foreground">{p.tagline}</div>
                   </div>
                 </div>
-                <ArrowRight className="h-4 w-4 text-muted-foreground transition group-hover:translate-x-1 group-hover:text-foreground" />
-              </Link>
+              </div>
             );
           })}
         </div>
       </section>
 
       {/* Features */}
-      <section className="mx-auto max-w-6xl px-5 py-20">
-        <div className="grid gap-4 md:grid-cols-4">
+      <section className="mx-auto max-w-6xl px-5 pb-20 pt-10">
+        <div className="grid gap-4 md:grid-cols-3">
           {[
-            { i: Clock, t: "Resposta em segundos", d: "Tempo médio de consulta abaixo de 8s." },
-            { i: ShieldCheck, t: "Conteúdo confiável", d: "Curado e revisado por especialistas." },
+            { i: Clock, t: "Resposta em segundos", d: "Tempo médio de consulta de 8s." },
+            // { i: ShieldCheck, t: "Conteúdo confiável", d: "Curado e revisado por especialistas." },
             { i: Zap, t: "Microlearning", d: "Vídeos de 20–40s e tutoriais diretos." },
             { i: BookmarkCheck, t: "Favoritos", d: "Salve o que você mais usa." },
           ].map((f) => (
@@ -226,7 +225,8 @@ function Landing() {
             Seu guia técnico de bolso.
           </h3>
           <p className="mx-auto mt-3 max-w-xl opacity-90">
-            Aprendizado rápido para momentos reais. Comece agora — é grátis enquanto estamos em MVP.
+            {/* Aprendizado rápido para momentos reais. Comece agora — é grátis enquanto estamos em MVP. */}
+            Aprendizado rápido para momentos reais. Comece agora — [INCLUIR VALOR!!!]
           </p>
           <Link
             to="/app"
