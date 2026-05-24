@@ -93,13 +93,17 @@ export const procedures: Procedure[] = [
       tutorial: [
         "Higienize a pele e retire maquiagem.",
         "Proteja os olhos do cliente com óculos opacos.",
+        "Selecione a cor conforme o objetivo do tratamento.",
         "Posicione o aparelho a 5–10 cm da pele.",
+        "Inicie a sessão e monitore o conforto do cliente.",
       ],
       checklist: [
         "Pele limpa e seca",
-        "Óculos de proteção",
-        "Distância correta",
+        "Óculos de proteção colocados",
+        "Cor/intensidade do LED selecionada",
+        "Distância de 5-10cm conferida",
         "Tempo programado",
+        "Cliente sem desconforto",
       ],
       commonErrors: [
         "Esquecer proteção ocular",

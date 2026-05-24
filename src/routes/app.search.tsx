@@ -35,15 +35,21 @@ function SearchPage() {
         <ArrowLeft className="h-4 w-4" /> Voltar
       </Link>
 
-      <div className="flex items-center gap-3 rounded-2xl border border-border bg-card px-4 py-3">
+      <div className="space-y-2">
+        <label htmlFor="procedure-search" className="text-xs uppercase tracking-widest text-muted-foreground">
+          Digite para pesquisar:
+        </label>
+        <div className="flex items-center gap-3 rounded-2xl border border-border bg-card px-4 py-3">
         <SearchIcon className="h-4 w-4 text-muted-foreground" />
         <input
+          id="procedure-search"
           autoFocus
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Ex: frequência, microagulhamento, joules…"
           className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
         />
+        </div>
       </div>
 
       <div className="space-y-2">
