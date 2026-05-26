@@ -75,6 +75,28 @@ export function useMyChecklists() {
     return id;
   }, [save]);
 
+  const saveChecklist = useCallback(
+    (checklist: MyChecklist) => {
+      save((current) => ({ ...current, [checklist.id]: checklist }));
+    },
+    [save],
+  );
+
+  const createChecklistFromDraft = useCallback(
+    (draft: Pick<MyChecklist, "name" | "items">) => {
+      const id = createChecklistId();
+      const checklist: MyChecklist = {
+        id,
+        name: draft.name,
+        items: draft.items,
+        createdAt: Date.now(),
+      };
+      save((current) => ({ ...current, [id]: checklist }));
+      return id;
+    },
+    [save],
+  );
+
   const updateChecklist = useCallback(
     (id: string, updater: (checklist: MyChecklist) => MyChecklist) => {
       save((current) => {
@@ -152,6 +174,8 @@ export function useMyChecklists() {
   return {
     checklists,
     createChecklist,
+    createChecklistFromDraft,
+    saveChecklist,
     renameChecklist,
     addItem,
     updateItem,

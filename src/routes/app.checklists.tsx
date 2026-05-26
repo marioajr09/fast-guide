@@ -98,7 +98,7 @@ function ItemCount({ count }: { count: number }) {
 function Checklists() {
   const navigate = useNavigate();
   const customChecklists = useCustomChecklists();
-  const { checklists, createChecklist } = useMyChecklists();
+  const { checklists } = useMyChecklists();
   const { pinned } = usePinnedChecklists();
   const myChecklists = Object.values(checklists).sort((a, b) => a.createdAt - b.createdAt);
 
@@ -135,8 +135,7 @@ function Checklists() {
   const hasAnyChecklist = pinnedItems.length > 0 || myItems.length > 0 || customItems.length > 0;
 
   const createAndOpenChecklist = () => {
-    const id = createChecklist();
-    navigate({ to: "/app/my-checklist/$id", params: { id } });
+    navigate({ to: "/app/my-checklist/$id", params: { id: "new" } });
   };
 
   return (
