@@ -8,34 +8,43 @@ export const Route = createFileRoute("/app/")({
 
 function AppHome() {
   return (
-    <div className="space-y-6">
-      <div>
-        <p className="text-sm text-muted-foreground">Olá 👋</p>
+    <div className="space-y-7">
+      {/* <div>
         <h1 className="font-display text-2xl font-semibold leading-tight">
           O que você precisa <span className="text-gradient">agora?</span>
         </h1>
-      </div>
+      </div> */}
 
-      <Link
-        to="/app/search"
-        className="flex items-center gap-3 rounded-2xl border border-border bg-card px-4 py-3 text-sm text-muted-foreground"
-      >
-        <Search className="h-4 w-4" /> Buscar procedimento, parâmetro, dúvida…
-      </Link>
+      {/* Configurações e espaçamento da seção de pesquisa */}
+      <section className="space-y-2 pt-2">
+        {/* <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+          Pesquisar
+        </h2> */}
+        <Link
+          to="/app/search"
+          className="flex items-center gap-3 rounded-2xl border border-border bg-card px-4 py-4 text-sm text-muted-foreground"
+        >
+          <Search className="h-4 w-4" /> Buscar procedimento, parâmetro, dúvida…
+        </Link>
+      </section>
 
-      <Link
-        to="/app/forgot"
-        className="group flex items-center justify-between rounded-3xl bg-gradient-primary p-5 text-primary-foreground shadow-glow"
-      >
-        <div>
-          <div className="text-xs uppercase tracking-wider opacity-80">Atalho rápido</div>
+      {/* Configurações da seção e título do "Atalho Rápido" */}
+      <section className="space-y-2">
+        <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-muted-foreground pb-1">
+          Atalho rápido
+        </h2>
+        <Link
+          to="/app/forgot"
+          // Tamanho e propriedades do botão
+          className="group flex items-center justify-between rounded-3xl bg-gradient-primary px-5 py-5.5 text-primary-foreground shadow-glow"
+        >
+          {/* Tamanho e propriedades da fonte dentro do botão */}
           <div className="font-display text-2xl font-semibold">Esqueci isso</div>
-          <p className="mt-1 text-sm opacity-90">Encontre em 3 toques.</p>
-        </div>
-        <ArrowRight className="h-6 w-6 transition group-hover:translate-x-1" />
-      </Link>
+          <ArrowRight className="h-6 w-6 transition group-hover:translate-x-1" />
+        </Link>
+      </section>
 
-      <section>
+      <section className="border-t border-border pt-5">
         <div className="mb-3 flex items-center justify-between">
           <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-muted-foreground">
             Categorias
