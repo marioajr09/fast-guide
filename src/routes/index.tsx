@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Search, Sparkles, Zap, Clock, ShieldCheck, BookmarkCheck, PlayCircle } from "lucide-react";
+import { ArrowRight, Search, Sparkles, Zap, Clock, ShieldCheck, BookmarkCheck, PlayCircle, ClipboardList } from "lucide-react";
 import { procedures } from "@/data/procedures";
 
 export const Route = createFileRoute("/")({
@@ -21,8 +21,9 @@ function Landing() {
       <header className="sticky top-0 z-40 glass">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
           <Link to="/" className="flex items-center gap-2">
-            <div className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-primary text-primary-foreground">
-              <Sparkles className="h-4 w-4" />
+            <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-primary text-primary-foreground">
+              <ClipboardList className="h-4 w-4 -ml-0.5 -mt-0.5" />
+              <Sparkles className="absolute bottom-1 right-0.5 h-3.5 w-3.5 drop-shadow-md" />
             </div>
             <span className="font-display text-lg font-semibold tracking-tight">Fast Guide</span>
           </Link>
@@ -45,18 +46,17 @@ function Landing() {
         <div className="absolute inset-0 bg-hero-glow" />
         <div className="relative mx-auto max-w-6xl px-5 pb-12 pt-12 md:pt-12">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1 text-xs text-muted-foreground">
+            {/* <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1 text-xs text-muted-foreground">
               <span className="h-1.5 w-1.5 rounded-full bg-primary" />
               Microlearning para Estética e Cosmetologia
-            </span>
+            </span> */}
             <h1 className="mt-6 font-display text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl">
               Menos tempo procurando.
               <br />
               <span className="text-gradient">Mais segurança executando.</span>
             </h1>
             <p className="mx-auto mt-6 max-w-xl text-base text-muted-foreground md:text-lg">
-              Fast Guide é o seu guia técnico de bolso. Consulta instantânea de parâmetros, sequências e
-              contraindicações durante a prática — em segundos, no celular.
+              Fast Guide é o seu guia técnico de bolso.<br /> A informação certa, no momento em que você precisa.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               {/* <Link

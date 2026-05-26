@@ -1,5 +1,5 @@
 import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
-import { Home, Search, Bookmark, Sparkles } from "lucide-react";
+import { Home, Search, Bookmark, Sparkles, ClipboardList } from "lucide-react";
 
 export const Route = createFileRoute("/app")({
   component: AppShell,
@@ -18,12 +18,12 @@ function AppShell() {
       <header className="sticky top-0 z-30 glass">
         <div className="mx-auto flex max-w-md items-center justify-between px-5 py-3">
           <Link to="/" className="flex items-center gap-2">
-            <div className="grid h-7 w-7 place-items-center rounded-lg bg-gradient-primary text-primary-foreground">
-              <Sparkles className="h-3.5 w-3.5" />
+            <div className="relative flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-primary text-primary-foreground">
+              <ClipboardList className="h-3.5 w-3.5 -ml-0.5 -mt-0.5" />
+              <Sparkles className="absolute bottom-1 right-0.5 h-3 w-3 drop-shadow-md" />
             </div>
             <span className="font-display text-base font-semibold">Fast Guide</span>
           </Link>
-          <span className="text-xs text-muted-foreground">MVP</span>
         </div>
       </header>
 
