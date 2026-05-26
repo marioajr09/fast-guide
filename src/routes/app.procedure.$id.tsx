@@ -6,24 +6,29 @@ import {
   Bookmark,
   Check,
   Pencil,
+  Pin,
   Play,
   Plus,
   RotateCcw,
   Trash2,
-  X,
   AlertTriangle,
   Ban,
   Sliders,
   ListChecks,
   BookOpen,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { procedures, forgotOptions, type ForgotKey } from "@/data/procedures";
 import { useCustomChecklist } from "@/store/custom-checklists";
 import { useFavorites } from "@/store/favorites";
+import { usePinnedChecklists } from "@/store/pinned-checklists";
 
 import type { VideoSource } from "@/data/procedures";
+
+type Tab = "video" | "tutorial" | "checklist" | "errors" | "contra" | "params";
+
+const tabKeys: Tab[] = ["video", "tutorial", "checklist", "errors", "contra", "params"];
 
 export const Route = createFileRoute("/app/procedure/$id")({
   loader: ({ params }): { procId: string } => {
@@ -31,6 +36,9 @@ export const Route = createFileRoute("/app/procedure/$id")({
     if (!proc) throw notFound();
     return { procId: proc.id };
   },
+  validateSearch: (search: Record<string, unknown>): { tab?: Tab } => ({
+    tab: tabKeys.includes(search.tab as Tab) ? (search.tab as Tab) : undefined,
+  }),
   component: ProcedurePage,
   notFoundComponent: () => (
     <div className="p-10 text-center text-sm text-muted-foreground">
@@ -38,8 +46,6 @@ export const Route = createFileRoute("/app/procedure/$id")({
     </div>
   ),
 });
-
-type Tab = "video" | "tutorial" | "checklist" | "errors" | "contra" | "params";
 
 const tabs: { key: Tab; label: string; icon: typeof Play }[] = [
   { key: "video", label: "Vídeo", icon: Play },
@@ -88,13 +94,16 @@ function ProcedureVideo({
 
 function ProcedurePage() {
   const { procId } = Route.useLoaderData() as { procId: string };
+  const search = Route.useSearch();
   const proc = procedures.find((p) => p.id === procId);
 
   if (!proc) throw notFound();
 
   const { has, toggle } = useFavorites();
+  const { has: hasPinnedChecklist, toggle: togglePinnedChecklist } = usePinnedChecklists();
+  const checklistPinned = hasPinnedChecklist(proc.id);
   const Icon = proc.icon;
-  const [tab, setTab] = useState<Tab>("video");
+  const [tab, setTab] = useState<Tab>(search.tab ?? "video");
   const [forgot, setForgot] = useState<ForgotKey | null>(null);
   const [checked, setChecked] = useState<Record<string, boolean>>({});
   const [editingChecklist, setEditingChecklist] = useState(false);
@@ -108,6 +117,10 @@ function ProcedurePage() {
     moveItem,
     reset,
   } = useCustomChecklist(proc.id, proc.info.checklist);
+
+  useEffect(() => {
+    if (search.tab) setTab(search.tab);
+  }, [search.tab]);
 
   const tabFromForgot = (k: ForgotKey): Tab => {
     if (k === "parametros" || k === "tempo") return "params";
@@ -233,6 +246,18 @@ function ProcedurePage() {
                 )}
               </div>
               <div className="flex shrink-0 items-center gap-2">
+                <button
+                  onClick={() => togglePinnedChecklist(proc.id)}
+                  className={`grid h-9 w-9 place-items-center rounded-full border ${
+                    checklistPinned
+                      ? "border-primary bg-primary text-primary-foreground"
+                      : "border-border bg-background text-muted-foreground hover:text-foreground"
+                  }`}
+                  aria-label={checklistPinned ? "Desfixar checklist" : "Fixar checklist"}
+                  title={checklistPinned ? "Desfixar checklist" : "Fixar checklist"}
+                >
+                  <Pin className="h-4 w-4" fill={checklistPinned ? "currentColor" : "none"} />
+                </button>
                 {editingChecklist && hasCustomChecklist && (
                   <button
                     onClick={() => {
@@ -258,10 +283,14 @@ function ProcedurePage() {
                       ? "border-primary bg-primary text-primary-foreground"
                       : "border-border bg-background text-muted-foreground hover:text-foreground"
                   }`}
-                  aria-label={editingChecklist ? "Fechar edição" : "Editar checklist"}
-                  title={editingChecklist ? "Fechar edição" : "Editar checklist"}
+                  aria-label={editingChecklist ? "Concluir edição" : "Editar checklist"}
+                  title={editingChecklist ? "Concluir edição" : "Editar checklist"}
                 >
-                  {editingChecklist ? <X className="h-4 w-4" /> : <Pencil className="h-4 w-4" />}
+                  {editingChecklist ? (
+                    <Check className="h-4 w-4" />
+                  ) : (
+                    <Pencil className="h-4 w-4" />
+                  )}
                 </button>
               </div>
             </div>

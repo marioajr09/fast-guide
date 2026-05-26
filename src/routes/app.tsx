@@ -1,5 +1,5 @@
 import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
-import { Home, Search, Bookmark, Sparkles, ClipboardList } from "lucide-react";
+import { Home, Search, Bookmark, Sparkles, ClipboardList, ListChecks } from "lucide-react";
 
 export const Route = createFileRoute("/app")({
   component: AppShell,
@@ -7,9 +7,15 @@ export const Route = createFileRoute("/app")({
 
 function AppShell() {
   const { pathname } = useLocation();
-  const tabs: { to: "/app" | "/app/search" | "/app/favorites"; label: string; icon: typeof Home; exact?: boolean }[] = [
+  const tabs: {
+    to: "/app" | "/app/search" | "/app/checklists" | "/app/favorites";
+    label: string;
+    icon: typeof Home;
+    exact?: boolean;
+  }[] = [
     { to: "/app", label: "Início", icon: Home, exact: true },
     { to: "/app/search", label: "Buscar", icon: Search },
+    { to: "/app/checklists", label: "Checklists", icon: ListChecks },
     { to: "/app/favorites", label: "Favoritos", icon: Bookmark },
   ];
 

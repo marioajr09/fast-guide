@@ -119,3 +119,18 @@ export function useCustomChecklist(procedureId: string, defaults: string[]) {
     reset,
   };
 }
+
+export function useCustomChecklists() {
+  const [stored, setStored] = useState<StoredChecklists>({});
+
+  useEffect(() => {
+    setStored(read());
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === KEY) setStored(read());
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
+
+  return stored;
+}
