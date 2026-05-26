@@ -90,6 +90,11 @@ export const procedures: Procedure[] = [
     info: {
       title: "LED Terapia",
       videoLength: "00:25",
+      video: {
+        type: "local",
+        src: "/videos/terapia_led.mp4",
+        title: "Demonstração de Terapia LED",
+      },
       tutorial: [
         "Higienize a pele e retire maquiagem.",
         "Proteja os olhos do cliente com óculos opacos.",
@@ -132,6 +137,11 @@ export const procedures: Procedure[] = [
     info: {
       title: "Massagem Modeladora",
       videoLength: "00:38",
+      video: {
+        type: "local",
+        src: "/videos/massagem.mp4",
+        title: "Demonstração de massagem",
+      },
       tutorial: [
         "Aplique óleo ou creme de deslize uniformemente.",
         "Inicie com manobras de deslizamento superficial.",
@@ -287,5 +297,5 @@ export const forgotOptions: { key: ForgotKey; label: string; hint: string }[] = 
   { key: "parametros", label: "Parâmetros", hint: "Frequência, intensidade, tempo" },
   { key: "tempo", label: "Tempo e Dose", hint: "Duração por área e energia recomendada (Joules)" },
   { key: "sequencia", label: "Sequência", hint: "Ordem das etapas" },
-  { key: "configuracao", label: "Configuração e movimentos", hint: "Como ajustar o aparelho, manobras e direção" },
+  { key: "configuracao", label: "Ajustes e movimentos", hint: "Como ajustar o aparelho, manobras e direção" },
 ];
