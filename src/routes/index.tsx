@@ -99,9 +99,10 @@ function Landing() {
                   {procedures.slice(0, 6).map((p) => {
                     const Icon = p.icon;
                     return (
+                      // Mock do app
                       <div key={p.id} className="aspect-square rounded-xl border border-border bg-card p-2 text-[10px] text-muted-foreground">
                         <Icon className="h-4 w-4 text-foreground" />
-                        <div className="mt-2 leading-tight">{p.name}</div>
+                        <div className="mt-2 truncate leading-tight">{p.name}</div>
                       </div>
                     );
                   })}
@@ -152,9 +153,9 @@ function Landing() {
           </div>
           <div className="mt-10 grid gap-4 md:grid-cols-3">
             {[
-              { n: "01", t: "Toque em ‘Esqueci isso’", d: "Atalho gigante na tela inicial." },
+              { n: "01", t: "Toque em ‘Esqueci isso’", d: "Atalho em destaque na tela inicial." },
               { n: "02", t: "Escolha o procedimento", d: "Eletroterapia, LED, RF, Microagulhamento e mais." },
-              { n: "03", t: "Receba a resposta", d: "Vídeo curto, checklist, parâmetros e contraindicações." },
+              { n: "03", t: "Resposta rápida", d: "Vídeos rápidos e orientações práticas em segundos." },
             ].map((s) => (
               <div key={s.n} className="rounded-2xl border border-border bg-background p-6">
                 <div className="font-display text-sm text-muted-foreground">{s.n}</div>
@@ -219,18 +220,17 @@ function Landing() {
       </section>
 
       {/* CTA */}
-      <section className="mx-auto max-w-4xl px-5 pb-24">
-        <div className="overflow-hidden rounded-3xl border border-border bg-gradient-primary p-10 text-center text-primary-foreground shadow-glow">
+      <section className="mx-auto max-w-4xl px-5 pb-10 md:pb-20">
+        <div className="overflow-hidden rounded-3xl border border-border bg-gradient-primary px-6 pt-10 pb-8 md:pt-12 md:pb-10 text-center text-primary-foreground shadow-glow">
           <h3 className="font-display text-3xl font-semibold md:text-4xl">
             Seu guia técnico de bolso.
           </h3>
-          <p className="mx-auto mt-3 max-w-xl opacity-90">
-            {/* Aprendizado rápido para momentos reais. Comece agora — é grátis enquanto estamos em MVP. */}
-            Aprendizado rápido para momentos reais. Comece agora — [INCLUIR VALOR!!!]
+          <p className="mx-auto mt-4 max-w-xl text-[15px] sm:text-lg opacity-80 md:text-xl whitespace-nowrap sm:whitespace-normal">
+            Comece agora — [INCLUIR VALOR!!!]
           </p>
           <Link
             to="/app"
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-background px-6 py-3 text-sm font-semibold text-foreground hover:opacity-90"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-background px-8 py-3.5 text-base font-semibold text-foreground transition hover:opacity-90"
           >
             Abrir o app <ArrowRight className="h-4 w-4" />
           </Link>
