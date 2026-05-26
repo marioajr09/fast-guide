@@ -15,7 +15,9 @@ import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppSearchRouteImport } from './routes/app.search'
 import { Route as AppForgotRouteImport } from './routes/app.forgot'
 import { Route as AppFavoritesRouteImport } from './routes/app.favorites'
+import { Route as AppChecklistsRouteImport } from './routes/app.checklists'
 import { Route as AppProcedureIdRouteImport } from './routes/app.procedure.$id'
+import { Route as AppMyChecklistIdRouteImport } from './routes/app.my-checklist.$id'
 
 const AppRoute = AppRouteImport.update({
   id: '/app',
@@ -47,37 +49,53 @@ const AppFavoritesRoute = AppFavoritesRouteImport.update({
   path: '/favorites',
   getParentRoute: () => AppRoute,
 } as any)
+const AppChecklistsRoute = AppChecklistsRouteImport.update({
+  id: '/checklists',
+  path: '/checklists',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppProcedureIdRoute = AppProcedureIdRouteImport.update({
   id: '/procedure/$id',
   path: '/procedure/$id',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMyChecklistIdRoute = AppMyChecklistIdRouteImport.update({
+  id: '/my-checklist/$id',
+  path: '/my-checklist/$id',
   getParentRoute: () => AppRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/app/checklists': typeof AppChecklistsRoute
   '/app/favorites': typeof AppFavoritesRoute
   '/app/forgot': typeof AppForgotRoute
   '/app/search': typeof AppSearchRoute
   '/app/': typeof AppIndexRoute
+  '/app/my-checklist/$id': typeof AppMyChecklistIdRoute
   '/app/procedure/$id': typeof AppProcedureIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/app/checklists': typeof AppChecklistsRoute
   '/app/favorites': typeof AppFavoritesRoute
   '/app/forgot': typeof AppForgotRoute
   '/app/search': typeof AppSearchRoute
   '/app': typeof AppIndexRoute
+  '/app/my-checklist/$id': typeof AppMyChecklistIdRoute
   '/app/procedure/$id': typeof AppProcedureIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/app/checklists': typeof AppChecklistsRoute
   '/app/favorites': typeof AppFavoritesRoute
   '/app/forgot': typeof AppForgotRoute
   '/app/search': typeof AppSearchRoute
   '/app/': typeof AppIndexRoute
+  '/app/my-checklist/$id': typeof AppMyChecklistIdRoute
   '/app/procedure/$id': typeof AppProcedureIdRoute
 }
 export interface FileRouteTypes {
@@ -85,27 +103,33 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/app'
+    | '/app/checklists'
     | '/app/favorites'
     | '/app/forgot'
     | '/app/search'
     | '/app/'
+    | '/app/my-checklist/$id'
     | '/app/procedure/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/app/checklists'
     | '/app/favorites'
     | '/app/forgot'
     | '/app/search'
     | '/app'
+    | '/app/my-checklist/$id'
     | '/app/procedure/$id'
   id:
     | '__root__'
     | '/'
     | '/app'
+    | '/app/checklists'
     | '/app/favorites'
     | '/app/forgot'
     | '/app/search'
     | '/app/'
+    | '/app/my-checklist/$id'
     | '/app/procedure/$id'
   fileRoutesById: FileRoutesById
 }
@@ -158,6 +182,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppFavoritesRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/checklists': {
+      id: '/app/checklists'
+      path: '/checklists'
+      fullPath: '/app/checklists'
+      preLoaderRoute: typeof AppChecklistsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/procedure/$id': {
       id: '/app/procedure/$id'
       path: '/procedure/$id'
@@ -165,22 +196,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProcedureIdRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/my-checklist/$id': {
+      id: '/app/my-checklist/$id'
+      path: '/my-checklist/$id'
+      fullPath: '/app/my-checklist/$id'
+      preLoaderRoute: typeof AppMyChecklistIdRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
+  AppChecklistsRoute: typeof AppChecklistsRoute
   AppFavoritesRoute: typeof AppFavoritesRoute
   AppForgotRoute: typeof AppForgotRoute
   AppSearchRoute: typeof AppSearchRoute
   AppIndexRoute: typeof AppIndexRoute
+  AppMyChecklistIdRoute: typeof AppMyChecklistIdRoute
   AppProcedureIdRoute: typeof AppProcedureIdRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppChecklistsRoute: AppChecklistsRoute,
   AppFavoritesRoute: AppFavoritesRoute,
   AppForgotRoute: AppForgotRoute,
   AppSearchRoute: AppSearchRoute,
   AppIndexRoute: AppIndexRoute,
+  AppMyChecklistIdRoute: AppMyChecklistIdRoute,
   AppProcedureIdRoute: AppProcedureIdRoute,
 }
 
