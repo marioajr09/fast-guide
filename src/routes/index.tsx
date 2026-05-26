@@ -5,9 +5,9 @@ import { procedures } from "@/data/procedures";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Fast Guide — Seu guia técnico de bolso para Estética" },
+      { title: "Fast Guide - Guia Técnico para Estética" },
       { name: "description", content: "Consulta técnica instantânea durante procedimentos estéticos. Microlearning para alunos e profissionais de Estética e Cosmetologia." },
-      { property: "og:title", content: "Fast Guide — Guia técnico de bolso" },
+      { property: "og:title", content: "Fast Guide - Guia técnico de bolso" },
       { property: "og:description", content: "Menos tempo procurando. Mais segurança executando." },
     ],
   }),
