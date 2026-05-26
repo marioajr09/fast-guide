@@ -27,8 +27,16 @@ import { usePinnedChecklists } from "@/store/pinned-checklists";
 import type { VideoSource } from "@/data/procedures";
 
 type Tab = "video" | "tutorial" | "checklist" | "errors" | "contra" | "params";
+type ProcedureSource = "checklists" | "favorites" | "search";
 
 const tabKeys: Tab[] = ["video", "tutorial", "checklist", "errors", "contra", "params"];
+const sourceKeys: ProcedureSource[] = ["checklists", "favorites", "search"];
+
+const backRoutes: Record<ProcedureSource, "/app/checklists" | "/app/favorites" | "/app/search"> = {
+  checklists: "/app/checklists",
+  favorites: "/app/favorites",
+  search: "/app/search",
+};
 
 export const Route = createFileRoute("/app/procedure/$id")({
   loader: ({ params }): { procId: string } => {
@@ -36,8 +44,11 @@ export const Route = createFileRoute("/app/procedure/$id")({
     if (!proc) throw notFound();
     return { procId: proc.id };
   },
-  validateSearch: (search: Record<string, unknown>): { tab?: Tab } => ({
+  validateSearch: (search: Record<string, unknown>): { tab?: Tab; from?: ProcedureSource } => ({
     tab: tabKeys.includes(search.tab as Tab) ? (search.tab as Tab) : undefined,
+    from: sourceKeys.includes(search.from as ProcedureSource)
+      ? (search.from as ProcedureSource)
+      : undefined,
   }),
   component: ProcedurePage,
   notFoundComponent: () => (
@@ -96,6 +107,7 @@ function ProcedurePage() {
   const { procId } = Route.useLoaderData() as { procId: string };
   const search = Route.useSearch();
   const proc = procedures.find((p) => p.id === procId);
+  const backTo = search.from ? backRoutes[search.from] : "/app";
 
   if (!proc) throw notFound();
 
@@ -133,7 +145,7 @@ function ProcedurePage() {
     <div className="space-y-5">
       <div className="flex items-center justify-between">
         <Link
-          to="/app"
+          to={backTo}
           className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
         >
           <ArrowLeft className="h-4 w-4" /> Voltar

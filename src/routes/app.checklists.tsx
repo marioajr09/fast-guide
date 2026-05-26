@@ -35,7 +35,7 @@ function ProcedureChecklistCard({
     <Link
       to="/app/procedure/$id"
       params={{ id: procedure.id }}
-      search={{ tab: "checklist" }}
+      search={{ tab: "checklist", from: "checklists" }}
       className="flex items-center gap-3 rounded-xl border border-border bg-card p-3"
     >
       <div
@@ -147,9 +147,7 @@ function Checklists() {
         </div>
         <div className="flex items-center gap-2">
           <div className="group relative">
-            <button
-              className="grid h-9 w-9 place-items-center rounded-full border border-border bg-card text-muted-foreground hover:text-foreground"
-            >
+            <button className="grid h-9 w-9 place-items-center rounded-full border border-border bg-card text-muted-foreground hover:text-foreground">
               <CircleHelp className="h-4 w-4" />
             </button>
             <div className="pointer-events-none absolute right-0 top-10 z-10 w-64 rounded-xl border border-border bg-popover p-3 text-xs text-popover-foreground opacity-0 shadow-card transition group-hover:opacity-100 group-focus-within:opacity-100">

@@ -34,9 +34,12 @@ function Favorites() {
                 key={p.id}
                 to="/app/procedure/$id"
                 params={{ id: p.id }}
+                search={{ from: "favorites" }}
                 className="flex items-center gap-3 rounded-xl border border-border bg-card p-3"
               >
-                <div className={`grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br ${p.color} text-white`}>
+                <div
+                  className={`grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br ${p.color} text-white`}
+                >
                   <Icon className="h-4 w-4" />
                 </div>
                 <div>
