@@ -1,8 +1,26 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, Bookmark, Check, Play, AlertTriangle, Ban, Sliders, ListChecks, BookOpen } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowLeft,
+  ArrowUp,
+  Bookmark,
+  Check,
+  Pencil,
+  Play,
+  Plus,
+  RotateCcw,
+  Trash2,
+  X,
+  AlertTriangle,
+  Ban,
+  Sliders,
+  ListChecks,
+  BookOpen,
+} from "lucide-react";
 import { useState } from "react";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { procedures, forgotOptions, type ForgotKey } from "@/data/procedures";
+import { useCustomChecklist } from "@/store/custom-checklists";
 import { useFavorites } from "@/store/favorites";
 
 import type { VideoSource } from "@/data/procedures";
@@ -15,7 +33,9 @@ export const Route = createFileRoute("/app/procedure/$id")({
   },
   component: ProcedurePage,
   notFoundComponent: () => (
-    <div className="p-10 text-center text-sm text-muted-foreground">Procedimento não encontrado.</div>
+    <div className="p-10 text-center text-sm text-muted-foreground">
+      Procedimento não encontrado.
+    </div>
   ),
 });
 
@@ -30,7 +50,13 @@ const tabs: { key: Tab; label: string; icon: typeof Play }[] = [
   { key: "contra", label: "Contraind.", icon: Ban },
 ];
 
-function ProcedureVideo({ video, fallbackLength }: { video?: VideoSource; fallbackLength: string }) {
+function ProcedureVideo({
+  video,
+  fallbackLength,
+}: {
+  video?: VideoSource;
+  fallbackLength: string;
+}) {
   if (!video) {
     return (
       <div>
@@ -70,7 +96,18 @@ function ProcedurePage() {
   const Icon = proc.icon;
   const [tab, setTab] = useState<Tab>("video");
   const [forgot, setForgot] = useState<ForgotKey | null>(null);
-  const [checked, setChecked] = useState<Record<number, boolean>>({});
+  const [checked, setChecked] = useState<Record<string, boolean>>({});
+  const [editingChecklist, setEditingChecklist] = useState(false);
+  const {
+    items: checklistItems,
+    hasCustomChecklist,
+    startCustomizing,
+    updateItem,
+    addItem,
+    deleteItem,
+    moveItem,
+    reset,
+  } = useCustomChecklist(proc.id, proc.info.checklist);
 
   const tabFromForgot = (k: ForgotKey): Tab => {
     if (k === "parametros" || k === "tempo") return "params";
@@ -82,7 +119,10 @@ function ProcedurePage() {
   return (
     <div className="space-y-5">
       <div className="flex items-center justify-between">
-        <Link to="/app" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+        <Link
+          to="/app"
+          className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
+        >
           <ArrowLeft className="h-4 w-4" /> Voltar
         </Link>
         <button
@@ -97,7 +137,9 @@ function ProcedurePage() {
       </div>
 
       <div className="flex items-center gap-3">
-        <div className={`grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br ${proc.color} text-white`}>
+        <div
+          className={`grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br ${proc.color} text-white`}
+        >
           <Icon className="h-6 w-6" />
         </div>
         <div>
@@ -108,7 +150,9 @@ function ProcedurePage() {
 
       {/* O que você esqueceu? */}
       <div className="rounded-2xl border border-border bg-card p-4">
-        <div className="text-xs uppercase tracking-widest text-muted-foreground">Atalhos rápidos</div>
+        <div className="text-xs uppercase tracking-widest text-muted-foreground">
+          Atalhos rápidos
+        </div>
         <div className="mt-3 grid grid-cols-2 gap-2">
           {forgotOptions.map((o) => (
             <button
@@ -180,28 +224,134 @@ function ProcedurePage() {
         )}
 
         {tab === "checklist" && (
-          <ul className="space-y-2">
-            {proc.info.checklist.map((item, i) => {
-              const on = checked[i];
-              return (
-                <li key={i}>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between gap-2">
+              <div className="min-w-0">
+                <p className="text-xs uppercase tracking-widest text-muted-foreground">Checklist</p>
+                {hasCustomChecklist && (
+                  <p className="mt-0.5 text-[11px] text-primary">Personalizado neste dispositivo</p>
+                )}
+              </div>
+              <div className="flex shrink-0 items-center gap-2">
+                {editingChecklist && hasCustomChecklist && (
                   <button
-                    onClick={() => setChecked((c) => ({ ...c, [i]: !c[i] }))}
-                    className="flex w-full items-center gap-3 rounded-xl border border-border bg-background p-3 text-left text-sm"
+                    onClick={() => {
+                      if (window.confirm("Redefinir este checklist para o padrão do app?")) {
+                        reset();
+                        setChecked({});
+                      }
+                    }}
+                    className="grid h-9 w-9 place-items-center rounded-full border border-border bg-background text-muted-foreground hover:text-foreground"
+                    aria-label="Redefinir checklist"
+                    title="Redefinir checklist"
                   >
-                    <span
-                      className={`grid h-5 w-5 place-items-center rounded-md border transition ${
-                        on ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card"
-                      }`}
-                    >
-                      {on && <Check className="h-3.5 w-3.5" />}
-                    </span>
-                    <span className={on ? "text-muted-foreground line-through" : ""}>{item}</span>
+                    <RotateCcw className="h-4 w-4" />
                   </button>
-                </li>
-              );
-            })}
-          </ul>
+                )}
+                <button
+                  onClick={() => {
+                    if (!editingChecklist) startCustomizing();
+                    setEditingChecklist((value) => !value);
+                  }}
+                  className={`grid h-9 w-9 place-items-center rounded-full border ${
+                    editingChecklist
+                      ? "border-primary bg-primary text-primary-foreground"
+                      : "border-border bg-background text-muted-foreground hover:text-foreground"
+                  }`}
+                  aria-label={editingChecklist ? "Fechar edição" : "Editar checklist"}
+                  title={editingChecklist ? "Fechar edição" : "Editar checklist"}
+                >
+                  {editingChecklist ? <X className="h-4 w-4" /> : <Pencil className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+
+            {editingChecklist ? (
+              <div className="space-y-2">
+                {checklistItems.map((item, i) => (
+                  <div
+                    key={item.id}
+                    className="grid grid-cols-[auto_1fr_auto] items-center gap-2 rounded-xl border border-border bg-background p-2"
+                  >
+                    <div className="flex flex-col gap-1">
+                      <button
+                        onClick={() => moveItem(item.id, -1)}
+                        disabled={i === 0}
+                        className="grid h-7 w-7 place-items-center rounded-md border border-border text-muted-foreground disabled:opacity-30"
+                        aria-label="Mover item para cima"
+                        title="Mover para cima"
+                      >
+                        <ArrowUp className="h-3.5 w-3.5" />
+                      </button>
+                      <button
+                        onClick={() => moveItem(item.id, 1)}
+                        disabled={i === checklistItems.length - 1}
+                        className="grid h-7 w-7 place-items-center rounded-md border border-border text-muted-foreground disabled:opacity-30"
+                        aria-label="Mover item para baixo"
+                        title="Mover para baixo"
+                      >
+                        <ArrowDown className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+                    <input
+                      value={item.text}
+                      onChange={(event) => updateItem(item.id, event.target.value)}
+                      className="min-h-11 w-full rounded-lg border border-border bg-card px-3 text-sm outline-none focus:border-primary"
+                      placeholder="Novo item do checklist"
+                    />
+                    <button
+                      onClick={() => {
+                        deleteItem(item.id);
+                        setChecked((current) => {
+                          const next = { ...current };
+                          delete next[item.id];
+                          return next;
+                        });
+                      }}
+                      className="grid h-9 w-9 place-items-center rounded-full border border-border text-muted-foreground hover:text-destructive"
+                      aria-label="Apagar item"
+                      title="Apagar item"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                ))}
+                <button
+                  onClick={addItem}
+                  className="inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-xl border border-dashed border-primary/60 bg-primary/10 px-3 py-2 text-sm text-primary"
+                >
+                  <Plus className="h-4 w-4" /> Adicionar check
+                </button>
+              </div>
+            ) : (
+              <ul className="space-y-2">
+                {checklistItems.map((item) => {
+                  const on = checked[item.id];
+                  return (
+                    <li key={item.id}>
+                      <button
+                        onClick={() => setChecked((c) => ({ ...c, [item.id]: !c[item.id] }))}
+                        className="flex w-full items-center gap-3 rounded-xl border border-border bg-background p-3 text-left text-sm"
+                      >
+                        <span
+                          className={`grid h-5 w-5 place-items-center rounded-md border transition ${
+                            on
+                              ? "border-primary bg-primary text-primary-foreground"
+                              : "border-border bg-card"
+                          }`}
+                        >
+                          {on && <Check className="h-3.5 w-3.5" />}
+                        </span>
+                        <span className={on ? "text-muted-foreground line-through" : ""}>
+                          {item.text}
+                        </span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </div>
         )}
 
         {tab === "params" && (
@@ -218,7 +368,10 @@ function ProcedurePage() {
         {tab === "errors" && (
           <ul className="space-y-2">
             {proc.info.commonErrors.map((e, i) => (
-              <li key={i} className="flex items-start gap-3 rounded-xl border border-border bg-background p-3 text-sm">
+              <li
+                key={i}
+                className="flex items-start gap-3 rounded-xl border border-border bg-background p-3 text-sm"
+              >
                 <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-warning" />
                 {e}
               </li>
@@ -229,7 +382,10 @@ function ProcedurePage() {
         {tab === "contra" && (
           <ul className="space-y-2">
             {proc.info.contraindications.map((c, i) => (
-              <li key={i} className="flex items-start gap-3 rounded-xl border border-border bg-background p-3 text-sm">
+              <li
+                key={i}
+                className="flex items-start gap-3 rounded-xl border border-border bg-background p-3 text-sm"
+              >
                 <Ban className="mt-0.5 h-4 w-4 shrink-0 text-destructive" />
                 {c}
               </li>
