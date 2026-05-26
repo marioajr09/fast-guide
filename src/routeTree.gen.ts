@@ -15,6 +15,7 @@ import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppSearchRouteImport } from './routes/app.search'
 import { Route as AppForgotRouteImport } from './routes/app.forgot'
 import { Route as AppFavoritesRouteImport } from './routes/app.favorites'
+import { Route as AppChecklistsRouteImport } from './routes/app.checklists'
 import { Route as AppProcedureIdRouteImport } from './routes/app.procedure.$id'
 
 const AppRoute = AppRouteImport.update({
@@ -47,6 +48,11 @@ const AppFavoritesRoute = AppFavoritesRouteImport.update({
   path: '/favorites',
   getParentRoute: () => AppRoute,
 } as any)
+const AppChecklistsRoute = AppChecklistsRouteImport.update({
+  id: '/checklists',
+  path: '/checklists',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppProcedureIdRoute = AppProcedureIdRouteImport.update({
   id: '/procedure/$id',
   path: '/procedure/$id',
@@ -56,6 +62,7 @@ const AppProcedureIdRoute = AppProcedureIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/app/checklists': typeof AppChecklistsRoute
   '/app/favorites': typeof AppFavoritesRoute
   '/app/forgot': typeof AppForgotRoute
   '/app/search': typeof AppSearchRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/app/checklists': typeof AppChecklistsRoute
   '/app/favorites': typeof AppFavoritesRoute
   '/app/forgot': typeof AppForgotRoute
   '/app/search': typeof AppSearchRoute
@@ -74,6 +82,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/app/checklists': typeof AppChecklistsRoute
   '/app/favorites': typeof AppFavoritesRoute
   '/app/forgot': typeof AppForgotRoute
   '/app/search': typeof AppSearchRoute
@@ -85,6 +94,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/app'
+    | '/app/checklists'
     | '/app/favorites'
     | '/app/forgot'
     | '/app/search'
@@ -93,6 +103,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/app/checklists'
     | '/app/favorites'
     | '/app/forgot'
     | '/app/search'
@@ -102,6 +113,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/app'
+    | '/app/checklists'
     | '/app/favorites'
     | '/app/forgot'
     | '/app/search'
@@ -158,6 +170,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppFavoritesRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/checklists': {
+      id: '/app/checklists'
+      path: '/checklists'
+      fullPath: '/app/checklists'
+      preLoaderRoute: typeof AppChecklistsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/procedure/$id': {
       id: '/app/procedure/$id'
       path: '/procedure/$id'
@@ -169,6 +188,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppChecklistsRoute: typeof AppChecklistsRoute
   AppFavoritesRoute: typeof AppFavoritesRoute
   AppForgotRoute: typeof AppForgotRoute
   AppSearchRoute: typeof AppSearchRoute
@@ -177,6 +197,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppChecklistsRoute: AppChecklistsRoute,
   AppFavoritesRoute: AppFavoritesRoute,
   AppForgotRoute: AppForgotRoute,
   AppSearchRoute: AppSearchRoute,
