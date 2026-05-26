@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, Search as SearchIcon } from "lucide-react";
+import { ArrowLeft, ClipboardList, Search as SearchIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import { procedures } from "@/data/procedures";
+import { useCustomChecklists } from "@/store/custom-checklists";
+import { useMyChecklists } from "@/store/my-checklists";
 
 export const Route = createFileRoute("/app/search")({
   component: SearchPage,
@@ -27,26 +29,45 @@ function normalizeSearchText(value: string) {
 
 function SearchPage() {
   const [q, setQ] = useState("");
+  const customChecklists = useCustomChecklists();
+  const { checklists } = useMyChecklists();
   const hasSearch = q.trim().length > 0;
 
   const results = useMemo(() => {
     const term = normalizeSearchText(q.trim());
-    if (!term) return [];
-    return procedures.filter((p) => {
+    if (!term) return { procedures: [], myChecklists: [] };
+
+    const procedureResults = procedures.filter((p) => {
+      const customChecklist = customChecklists[p.id];
       const hay = normalizeSearchText(
         [
           p.name,
           p.tagline,
           p.info.title,
           ...p.info.parameters.map((x) => `${x.label} ${x.value}`),
-          ...p.info.checklist,
+          ...(customChecklist ? customChecklist.map((item) => item.text) : p.info.checklist),
           ...p.info.commonErrors,
           ...p.info.contraindications,
         ].join(" "),
       );
       return hay.includes(term);
     });
-  }, [q]);
+
+    const myChecklistResults = Object.values(checklists).filter((checklist) => {
+      const hay = normalizeSearchText(
+        [
+          checklist.name,
+          "checklist independente",
+          ...checklist.items.map((item) => item.text),
+        ].join(" "),
+      );
+      return hay.includes(term);
+    });
+
+    return { procedures: procedureResults, myChecklists: myChecklistResults };
+  }, [checklists, customChecklists, q]);
+
+  const resultCount = results.procedures.length + results.myChecklists.length;
 
   return (
     <div className="space-y-5">
@@ -97,9 +118,9 @@ function SearchPage() {
       ) : (
         <div className="space-y-2">
           <div className="text-xs uppercase tracking-widest text-muted-foreground">
-            {results.length} resultado{results.length === 1 ? "" : "s"}
+            {resultCount} resultado{resultCount === 1 ? "" : "s"}
           </div>
-          {results.map((p) => {
+          {results.procedures.map((p) => {
             const Icon = p.icon;
             return (
               <Link
@@ -121,7 +142,23 @@ function SearchPage() {
               </Link>
             );
           })}
-          {results.length === 0 && (
+          {results.myChecklists.map((checklist) => (
+            <Link
+              key={checklist.id}
+              to="/app/my-checklist/$id"
+              params={{ id: checklist.id }}
+              className="flex items-center gap-3 rounded-xl border border-border bg-card p-3"
+            >
+              <div className="grid h-9 w-9 place-items-center rounded-lg bg-gradient-primary text-primary-foreground">
+                <ClipboardList className="h-4 w-4" />
+              </div>
+              <div className="min-w-0">
+                <div className="truncate font-display text-sm font-semibold">{checklist.name}</div>
+                <div className="truncate text-xs text-muted-foreground">Checklist independente</div>
+              </div>
+            </Link>
+          ))}
+          {resultCount === 0 && (
             <div className="rounded-xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
               Nada encontrado. Tente outro termo.
             </div>
