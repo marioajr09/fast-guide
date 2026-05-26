@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Search, Sparkles, Zap, Clock, ShieldCheck, BookmarkCheck, PlayCircle, ClipboardList } from "lucide-react";
+import { ArrowRight, Search, Sparkles, PlayCircle, ClipboardList } from "lucide-react";
 import { procedures } from "@/data/procedures";
 
 export const Route = createFileRoute("/")({
@@ -32,12 +32,12 @@ function Landing() {
             <a href="#como-funciona" className="hover:text-foreground">Como funciona</a>
             <a href="#categorias" className="hover:text-foreground">Categorias</a>
           </nav>
-          <Link
+          {/* <Link
             to="/app"
             className="rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background transition hover:opacity-90"
           >
             Abrir app
-          </Link>
+          </Link> */}
         </div>
       </header>
 
@@ -55,20 +55,19 @@ function Landing() {
               <br />
               <span className="text-gradient">Mais segurança executando.</span>
             </h1>
-            <p className="mx-auto mt-6 max-w-xl text-base text-muted-foreground md:text-lg">
-              Fast Guide é o seu guia técnico de bolso.<br /> A informação certa, no momento em que você precisa.
+            <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground md:mt-7 md:text-xl">
+              A informação certa, no momento em que você precisa.
             </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              {/* <Link
-                to="/app/forgot"
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-6 py-3 text-sm font-medium text-foreground hover:bg-card"
-              >
-                Esqueci isso
-                <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
-              </Link> */}
+            
+            {/* Separador */}
+            <div className="mx-auto max-w-6xl px-4 my-8">
+              <div className="h-0.5 w-full bg-border/80" />
+            </div>
+
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 md:mt-12">
               <Link
                 to="/app"
-                className="group inline-flex items-center gap-2 rounded-full bg-gradient-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-glow transition hover:opacity-95"
+                className="group inline-flex items-center gap-3 rounded-full bg-gradient-primary px-7 py-5 text-sm font-semibold text-primary-foreground shadow-glow transition hover:opacity-95"
               >
                 <PlayCircle className="h-4 w-4" /> Abrir o app
                 <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
@@ -77,7 +76,7 @@ function Landing() {
           </div>
 
           {/* Mock phone */}
-          <div className="mx-auto mt-10 max-w-[280px] md:max-w-xs">
+          <div className="mx-auto mt-14 max-w-[280px] md:max-w-xs">
             <div className="relative rounded-[2.5rem] border border-border bg-card p-3 shadow-card">
               <div className="rounded-[2rem] bg-background p-5">
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
@@ -114,14 +113,14 @@ function Landing() {
       </section>
 
       {/* Problema */}
-      <section id="problema" className="mx-auto max-w-6xl px-5 pb-20 pt-10">
+        <section id="problema" className="mx-auto max-w-6xl px-5 py-12">
         <div className="grid items-start gap-10 md:grid-cols-2">
           <div>
             <span className="text-xs uppercase tracking-widest text-muted-foreground">O problema</span>
             <h2 className="mt-3 font-display text-3xl font-semibold md:text-4xl">
               Você sabe o procedimento. Só esqueceu <em className="not-italic text-gradient">aquele detalhe</em>.
             </h2>
-            <p className="mt-4 text-muted-foreground">
+            <p className="mt-4 text-justify text-muted-foreground">
               Durante a prática, ninguém quer abrir PDFs gigantes nem pesquisar em 4 lugares diferentes.
               E ter vergonha de perguntar de novo não deveria custar a sua segurança técnica.
             </p>
@@ -133,7 +132,7 @@ function Landing() {
               "Dúvida sobre a temperatura alvo da Radiofrequência.",
               "Precisa do checklist da Limpeza de Pele agora.",
             ].map((q) => (
-              <li key={q} className="flex items-start gap-3 rounded-xl border border-border bg-card p-4 text-sm">
+              <li key={q} className="flex items-start gap-3 rounded-xl border border-border bg-card p-4 text-sm transition hover:bg-card/60">
                 <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-primary" />
                 {q}
               </li>
@@ -143,8 +142,8 @@ function Landing() {
       </section>
 
       {/* Como funciona */}
-      <section id="como-funciona" className="border-y border-border bg-card/40">
-        <div className="mx-auto max-w-6xl px-5 py-20">
+        <section id="como-funciona" className="border-y border-border bg-card/40">
+          <div className="mx-auto max-w-6xl px-5 py-12">
           <div className="max-w-2xl">
             <span className="text-xs uppercase tracking-widest text-muted-foreground">Como funciona</span>
             <h2 className="mt-3 font-display text-3xl font-semibold md:text-4xl">
@@ -168,7 +167,7 @@ function Landing() {
       </section>
 
       {/* Categorias */}
-      <section id="categorias" className="mx-auto max-w-6xl px-5 pb-10 pt-20">
+      <section id="categorias" className="mx-auto max-w-6xl px-5 py-16">
         <div className="flex items-end justify-between gap-4">
           <div>
             <span className="text-xs uppercase tracking-widest text-muted-foreground">Categorias</span>
@@ -201,36 +200,23 @@ function Landing() {
         </div>
       </section>
 
-      {/* Features */}
-      <section className="mx-auto max-w-6xl px-5 pb-20 pt-10">
-        <div className="grid gap-4 md:grid-cols-3">
-          {[
-            { i: Clock, t: "Resposta em segundos", d: "Tempo médio de consulta de 8s." },
-            // { i: ShieldCheck, t: "Conteúdo confiável", d: "Curado e revisado por especialistas." },
-            { i: Zap, t: "Microlearning", d: "Vídeos curtos e tutoriais diretos." },
-            { i: BookmarkCheck, t: "Favoritos", d: "Salve o que você mais usa." },
-          ].map((f) => (
-            <div key={f.t} className="rounded-2xl border border-border bg-card p-5">
-              <f.i className="h-5 w-5 text-primary" />
-              <div className="mt-3 font-display text-base font-semibold">{f.t}</div>
-              <div className="mt-1 text-sm text-muted-foreground">{f.d}</div>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* Separador */}
+      <div className="mx-auto max-w-6xl px-5 my-6">
+        <div className="h-px w-full bg-border/60" />
+      </div>
 
       {/* CTA */}
-      <section className="mx-auto max-w-4xl px-5 pb-10 md:pb-20">
-        <div className="overflow-hidden rounded-3xl border border-border bg-gradient-primary px-6 pt-10 pb-8 md:pt-12 md:pb-10 text-center text-primary-foreground shadow-glow">
-          <h3 className="font-display text-3xl font-semibold md:text-4xl">
+      <section className="mx-auto max-w-4xl px-5 py-16">
+        <div className="overflow-hidden rounded-3xl border border-border bg-gradient-primary px-6 py-8 md:px-8 md:py-9 text-center text-primary-foreground shadow-glow">
+          <h3 className="font-display text-2xl font-semibold md:text-3xl">
             Seu guia técnico de bolso.
           </h3>
-          <p className="mx-auto mt-4 max-w-xl text-[15px] sm:text-lg opacity-80 md:text-xl whitespace-nowrap sm:whitespace-normal">
+          <p className="mx-auto mt-3 max-w-lg text-sm sm:text-base opacity-80 md:text-lg whitespace-nowrap sm:whitespace-normal">
             Comece agora — [INCLUIR VALOR!!!]
           </p>
           <Link
             to="/app"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-background px-8 py-3.5 text-base font-semibold text-foreground transition hover:opacity-90"
+            className="mt-6 inline-flex items-center gap-2 rounded-full bg-background px-7 py-3 text-sm font-semibold text-foreground transition hover:opacity-90"
           >
             Abrir o app <ArrowRight className="h-4 w-4" />
           </Link>
