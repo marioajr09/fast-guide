@@ -17,6 +17,7 @@ import { Route as AppForgotRouteImport } from './routes/app.forgot'
 import { Route as AppFavoritesRouteImport } from './routes/app.favorites'
 import { Route as AppChecklistsRouteImport } from './routes/app.checklists'
 import { Route as AppProcedureIdRouteImport } from './routes/app.procedure.$id'
+import { Route as AppMyChecklistIdRouteImport } from './routes/app.my-checklist.$id'
 
 const AppRoute = AppRouteImport.update({
   id: '/app',
@@ -58,6 +59,11 @@ const AppProcedureIdRoute = AppProcedureIdRouteImport.update({
   path: '/procedure/$id',
   getParentRoute: () => AppRoute,
 } as any)
+const AppMyChecklistIdRoute = AppMyChecklistIdRouteImport.update({
+  id: '/my-checklist/$id',
+  path: '/my-checklist/$id',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -67,6 +73,7 @@ export interface FileRoutesByFullPath {
   '/app/forgot': typeof AppForgotRoute
   '/app/search': typeof AppSearchRoute
   '/app/': typeof AppIndexRoute
+  '/app/my-checklist/$id': typeof AppMyChecklistIdRoute
   '/app/procedure/$id': typeof AppProcedureIdRoute
 }
 export interface FileRoutesByTo {
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/app/forgot': typeof AppForgotRoute
   '/app/search': typeof AppSearchRoute
   '/app': typeof AppIndexRoute
+  '/app/my-checklist/$id': typeof AppMyChecklistIdRoute
   '/app/procedure/$id': typeof AppProcedureIdRoute
 }
 export interface FileRoutesById {
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/app/forgot': typeof AppForgotRoute
   '/app/search': typeof AppSearchRoute
   '/app/': typeof AppIndexRoute
+  '/app/my-checklist/$id': typeof AppMyChecklistIdRoute
   '/app/procedure/$id': typeof AppProcedureIdRoute
 }
 export interface FileRouteTypes {
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/app/forgot'
     | '/app/search'
     | '/app/'
+    | '/app/my-checklist/$id'
     | '/app/procedure/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -108,6 +118,7 @@ export interface FileRouteTypes {
     | '/app/forgot'
     | '/app/search'
     | '/app'
+    | '/app/my-checklist/$id'
     | '/app/procedure/$id'
   id:
     | '__root__'
@@ -118,6 +129,7 @@ export interface FileRouteTypes {
     | '/app/forgot'
     | '/app/search'
     | '/app/'
+    | '/app/my-checklist/$id'
     | '/app/procedure/$id'
   fileRoutesById: FileRoutesById
 }
@@ -184,6 +196,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppProcedureIdRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/my-checklist/$id': {
+      id: '/app/my-checklist/$id'
+      path: '/my-checklist/$id'
+      fullPath: '/app/my-checklist/$id'
+      preLoaderRoute: typeof AppMyChecklistIdRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
@@ -193,6 +212,7 @@ interface AppRouteChildren {
   AppForgotRoute: typeof AppForgotRoute
   AppSearchRoute: typeof AppSearchRoute
   AppIndexRoute: typeof AppIndexRoute
+  AppMyChecklistIdRoute: typeof AppMyChecklistIdRoute
   AppProcedureIdRoute: typeof AppProcedureIdRoute
 }
 
@@ -202,6 +222,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppForgotRoute: AppForgotRoute,
   AppSearchRoute: AppSearchRoute,
   AppIndexRoute: AppIndexRoute,
+  AppMyChecklistIdRoute: AppMyChecklistIdRoute,
   AppProcedureIdRoute: AppProcedureIdRoute,
 }
 
