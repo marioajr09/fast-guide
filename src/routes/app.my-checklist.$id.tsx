@@ -72,12 +72,13 @@ function MyChecklistPage() {
 
     if (isNew) {
       const newId = createChecklistFromDraft({ name: cleanDraft.name, items: cleanDraft.items });
-      navigate({ to: "/app/my-checklist/$id", params: { id: newId } });
+      navigate({ to: "/app/checklists" });
       return newId;
     }
 
     saveChecklist({ ...cleanDraft, id, createdAt: existingChecklist?.createdAt ?? Date.now() });
     setDraft(cleanDraft);
+    navigate({ to: "/app/checklists" });
     return id;
   };
 

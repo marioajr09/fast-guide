@@ -149,8 +149,6 @@ function Checklists() {
           <div className="group relative">
             <button
               className="grid h-9 w-9 place-items-center rounded-full border border-border bg-card text-muted-foreground hover:text-foreground"
-              aria-label="Ver ideias de checklist"
-              title="Ideias de checklist"
             >
               <CircleHelp className="h-4 w-4" />
             </button>
