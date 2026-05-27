@@ -190,7 +190,9 @@ function ProcedurePage() {
       <div className="rounded-2xl border border-border bg-card p-4">
         <button
           onClick={() => setQuickShortcutsOpen((value) => !value)}
-          className="flex min-h-7 w-full items-center justify-between gap-3 text-left"
+          className={`flex w-full items-center justify-between gap-3 text-left ${
+            quickShortcutsOpen ? "min-h-7 py-1" : "min-h-4 py-0.5"
+          }`}
           aria-expanded={quickShortcutsOpen}
         >
           <span className="text-xs uppercase tracking-widest text-muted-foreground">
