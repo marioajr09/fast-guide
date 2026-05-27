@@ -5,6 +5,8 @@ import {
   ArrowUp,
   Bookmark,
   Check,
+  ChevronDown,
+  ChevronUp,
   Pencil,
   Pin,
   Play,
@@ -31,12 +33,18 @@ type ProcedureSource = "checklists" | "favorites" | "search";
 
 const tabKeys: Tab[] = ["video", "tutorial", "checklist", "errors", "contra", "params"];
 const sourceKeys: ProcedureSource[] = ["checklists", "favorites", "search"];
+const QUICK_SHORTCUTS_OPEN_KEY = "esteti-quick-shortcuts-open";
 
 const backRoutes: Record<ProcedureSource, "/app/checklists" | "/app/favorites" | "/app/search"> = {
   checklists: "/app/checklists",
   favorites: "/app/favorites",
   search: "/app/search",
 };
+
+function readQuickShortcutsOpen() {
+  if (typeof window === "undefined") return true;
+  return localStorage.getItem(QUICK_SHORTCUTS_OPEN_KEY) !== "false";
+}
 
 export const Route = createFileRoute("/app/procedure/$id")({
   loader: ({ params }): { procId: string } => {
@@ -119,6 +127,7 @@ function ProcedurePage() {
   const [forgot, setForgot] = useState<ForgotKey | null>(null);
   const [checked, setChecked] = useState<Record<string, boolean>>({});
   const [editingChecklist, setEditingChecklist] = useState(false);
+  const [quickShortcutsOpen, setQuickShortcutsOpen] = useState(readQuickShortcutsOpen);
   const {
     items: checklistItems,
     hasCustomChecklist,
@@ -133,6 +142,10 @@ function ProcedurePage() {
   useEffect(() => {
     if (search.tab) setTab(search.tab);
   }, [search.tab]);
+
+  useEffect(() => {
+    localStorage.setItem(QUICK_SHORTCUTS_OPEN_KEY, String(quickShortcutsOpen));
+  }, [quickShortcutsOpen]);
 
   const tabFromForgot = (k: ForgotKey): Tab => {
     if (k === "parametros" || k === "tempo") return "params";
@@ -175,31 +188,46 @@ function ProcedurePage() {
 
       {/* O que você esqueceu? */}
       <div className="rounded-2xl border border-border bg-card p-4">
-        <div className="text-xs uppercase tracking-widest text-muted-foreground">
-          Atalhos rápidos
-        </div>
-        <div className="mt-3 grid grid-cols-2 gap-2">
-          {forgotOptions.map((o) => (
-            <button
-              key={o.key}
-              onClick={() => {
-                setForgot(o.key);
-                setTab(tabFromForgot(o.key));
-              }}
-              className={`rounded-full border px-3 py-1.5 text-xs transition ${
-                forgot === o.key
-                  ? "border-primary bg-primary/15 text-foreground"
-                  : "border-border bg-background text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {o.label}
-            </button>
-          ))}
-        </div>
-        {forgot && (
-          <p className="mt-3 text-xs text-muted-foreground">
-            {forgotOptions.find((o) => o.key === forgot)?.hint}
-          </p>
+        <button
+          onClick={() => setQuickShortcutsOpen((value) => !value)}
+          className="flex min-h-7 w-full items-center justify-between gap-3 text-left"
+          aria-expanded={quickShortcutsOpen}
+        >
+          <span className="text-xs uppercase tracking-widest text-muted-foreground">
+            Atalhos rápidos
+          </span>
+          {quickShortcutsOpen ? (
+            <ChevronUp className="h-4 w-4 text-muted-foreground" />
+          ) : (
+            <ChevronDown className="h-4 w-4 text-muted-foreground" />
+          )}
+        </button>
+        {quickShortcutsOpen && (
+          <>
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              {forgotOptions.map((o) => (
+                <button
+                  key={o.key}
+                  onClick={() => {
+                    setForgot(o.key);
+                    setTab(tabFromForgot(o.key));
+                  }}
+                  className={`rounded-full border px-3 py-1.5 text-xs transition ${
+                    forgot === o.key
+                      ? "border-primary bg-primary/15 text-foreground"
+                      : "border-border bg-background text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {o.label}
+                </button>
+              ))}
+            </div>
+            {forgot && (
+              <p className="mt-3 text-xs text-muted-foreground">
+                {forgotOptions.find((o) => o.key === forgot)?.hint}
+              </p>
+            )}
+          </>
         )}
       </div>
 
