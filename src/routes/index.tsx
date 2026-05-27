@@ -87,13 +87,6 @@ function Landing() {
                 <div className="mt-4 flex items-center gap-2 rounded-xl border border-border bg-card px-3 py-2.5 text-sm text-muted-foreground">
                   <Search className="h-4 w-4" /> Buscar procedimento…
                 </div>
-                {/* <button className="mt-3 flex w-full items-center justify-between rounded-2xl bg-gradient-primary px-4 py-4 text-left text-primary-foreground shadow-glow">
-                  <div>
-                    <div className="text-xs opacity-80">Atalho rápido</div>
-                    <div className="font-display text-lg font-semibold">Esqueci isso</div>
-                  </div>
-                  <ArrowRight className="h-5 w-5" />
-                </button> */}
                 <div className="mt-4 grid grid-cols-3 gap-2">
                   {procedures.slice(0, 6).map((p) => {
                     const Icon = p.icon;
