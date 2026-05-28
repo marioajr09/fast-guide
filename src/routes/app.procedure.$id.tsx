@@ -191,7 +191,9 @@ function ProcedurePage() {
     if (k === "sequencia") {
       return extraTabs.some((extraTab) => extraTab.key === "sequencia") ? "sequencia" : "checklist";
     }
-    if (k === "configuracao") return "tutorial";
+    if (k === "configuracao") {
+      return extraTabs.some((extraTab) => extraTab.key === "movimentos") ? "movimentos" : "tutorial";
+    }
     return "tutorial";
   };
 

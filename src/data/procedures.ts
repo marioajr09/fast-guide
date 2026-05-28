@@ -523,16 +523,15 @@ export const procedures: Procedure[] = [
         "Aplique anestésico quando necessário e aguarde o tempo indicado.",
         "Realize o microagulhamento com movimentos horizontais, verticais e diagonais.",
         "Mantenha a pele tracionada, com pressão uniforme e controlada.",
-        "Movimentos: Horizontal, vertical e diagonal.",
-        "Não repetir excessivamente na mesma área.",
         "Aplique drug delivery ou ativos indicados conforme o objetivo.",
         "Finalize com orientações pós-procedimento.",
       ],
       checklist: [
         "Material estéril",
         "Pele higienizada",
-        "Antissepsia",
-        "Anestésico (se necessário)",
+        "Antissepsia realizada",
+        "Anestésico aplicado quando necessário",
+        "Profundidade definida",
         "Pele tracionada",
         "Ativo de drug delivery selecionado",
         "Orientações pós-procedimento passadas",
@@ -586,6 +585,49 @@ export const procedures: Procedure[] = [
             { label: "Estrias", value: "1,5–2,5 mm" },
             { label: "Couro cabeludo/alopecia", value: "0,5–1,5 mm" },
             { label: "Flacidez corporal", value: "1,0–2,0 mm" },
+          ],
+        },
+      ],
+      extraTabs: [
+        {
+          key: "movimentos",
+          label: "Movimentos",
+          groups: [
+            {
+              title: "Movimentos",
+              items: [
+                { label: "Horizontal", value: "Movimento linear horizontal" },
+                { label: "Vertical", value: "Movimento linear vertical" },
+                { label: "Diagonal", value: "Movimento linear diagonal" },
+              ],
+            },
+            {
+              title: "Técnica",
+              items: [
+                { label: "Pele", value: "Deve estar tracionada" },
+                { label: "Pressão", value: "Uniforme e controlada" },
+                { label: "Repetição", value: "Não repetir excessivamente na mesma área" },
+              ],
+            },
+          ],
+        },
+        {
+          key: "pos",
+          label: "Pós",
+          groups: [
+            {
+              title: "Reações esperadas",
+              items: [
+                { label: "Vermelhidão", value: "Reação comum após o procedimento" },
+                { label: "Sensação de calor", value: "Pode ocorrer nas primeiras horas" },
+                { label: "Edema leve", value: "Inchaço discreto esperado no pós" },
+                {
+                  label: "Ressecamento e descamação leve",
+                  value: "Pode acontecer durante a recuperação da pele",
+                },
+                { label: "Recuperação média", value: "3–5 dias" },
+              ],
+            },
           ],
         },
       ],
