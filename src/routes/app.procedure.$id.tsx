@@ -83,18 +83,13 @@ function ParameterGroupsView({ groups }: { groups: ParameterGroup[] }) {
       {groups.map((group) => (
         <section key={group.title || "default"}>
           {group.title && (
-            <h3 className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">
-              {group.title}
-            </h3>
+            <h3 className="mb-2 text-xs uppercase tracking-widest text-primary">{group.title}</h3>
           )}
           <div className="divide-y divide-border">
             {group.items.map((p) => (
-              <div
-                key={`${group.title}-${p.label}`}
-                className="grid gap-1 py-3 text-sm sm:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] sm:gap-4"
-              >
+              <div key={`${group.title}-${p.label}`} className="grid gap-1 py-3 text-sm">
                 <span className="min-w-0 text-muted-foreground">{p.label}</span>
-                <span className="min-w-0 font-display font-semibold leading-relaxed text-foreground sm:text-right">
+                <span className="min-w-0 font-display font-semibold leading-relaxed text-foreground">
                   {p.value}
                 </span>
               </div>
