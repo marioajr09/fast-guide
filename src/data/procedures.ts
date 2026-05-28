@@ -13,6 +13,12 @@ export interface ParameterGroup {
   items: ParameterItem[];
 }
 
+export interface ProcedureExtraTab {
+  key: string;
+  label: string;
+  groups: ParameterGroup[];
+}
+
 export interface QuickInfo {
   title: string;
   videoLength: string;
@@ -23,6 +29,7 @@ export interface QuickInfo {
   contraindications: string[];
   parameters: ParameterItem[];
   parameterGroups?: ParameterGroup[];
+  extraTabs?: ProcedureExtraTab[];
 }
 
 export type VideoSource =
@@ -116,32 +123,135 @@ export const procedures: Procedure[] = [
         "Higienize a pele e retire maquiagem.",
         "Proteja os olhos do cliente com óculos opacos.",
         "Selecione a cor conforme o objetivo do tratamento.",
-        "Posicione o aparelho a 5–10 cm da pele.",
-        "Inicie a sessão e monitore o conforto do cliente.",
+        "Confira a potência do aparelho e calcule o tempo conforme a energia desejada.",
+        "Posicione o aparelho conforme orientação do equipamento utilizado.",
+        "Inicie a sessão e monitore conforto, sensibilidade e reação da pele.",
       ],
       checklist: [
         "Pele limpa e seca",
         "Óculos de proteção colocados",
-        "Cor/intensidade do LED selecionada",
-        "Distância de 5-10cm conferida",
-        "Tempo programado",
+        "Cor do LED selecionada conforme objetivo",
+        "Potência do aparelho conferida",
+        "Tempo calculado pela fórmula E = P x t",
+        "Histórico de fotossensibilidade avaliado",
         "Cliente sem desconforto",
       ],
       commonErrors: [
         "Esquecer proteção ocular",
-        "Distância incorreta do aparelho",
+        "Escolher a cor sem considerar o objetivo do tratamento",
+        "Não converter mW para W antes de calcular o tempo",
+        "Confundir energia em Joules com potência em Watts",
+        "Programar o tempo sem usar a potência do equipamento",
         "Usar sobre maquiagem ou ativos fotossensibilizantes",
+        "Aplicar após exposição solar intensa ou em pele muito irritada",
       ],
       contraindications: [
-        "Uso de isotretinoína",
-        "Fotossensibilidade",
-        "Lúpus, epilepsia fotossensível",
+        "Pele bronzeada recentemente",
+        "Exposição solar intensa antes ou após a aplicação",
+        "Feridas abertas ou infecções no local",
+        "Câncer de pele ou lesões suspeitas",
+        "Gestação, dependendo da área e do equipamento",
+        "Epilepsia fotossensível",
+        "Uso de medicamentos fotossensibilizantes",
+        "Inflamações intensas na região",
+        "Vitiligo, principalmente em lasers que atuam em pigmento",
+        "Pele muito sensível ou irritada",
+        "Febre ou doenças infecciosas ativas",
+        "Histórico de queimaduras fáceis ou hiperpigmentação",
       ],
       parameters: [
-        { label: "Vermelho", value: "630 nm — anti-aging" },
-        { label: "Azul", value: "415 nm — acne" },
-        { label: "Âmbar", value: "590 nm — manchas" },
-        { label: "Tempo", value: "10–20 min" },
+        { label: "Violeta", value: "370–450 nm" },
+        { label: "Azul", value: "450–495 nm" },
+        { label: "Verde", value: "495–570 nm" },
+        { label: "Amarela/âmbar", value: "570–620 nm" },
+        { label: "Vermelha", value: "620–750 nm" },
+        { label: "Infravermelha", value: "750–1200 nm" },
+      ],
+      parameterGroups: [
+        {
+          title: "Cálculo de energia",
+          items: [
+            { label: "Fórmula", value: "E = P x t" },
+            { label: "E", value: "Energia em Joules (J)" },
+            { label: "P", value: "Potência em Watts (W)" },
+            { label: "t", value: "Tempo em segundos (s)" },
+            { label: "Exemplo", value: "0,2 W x 10 s = 2 J" },
+          ],
+        },
+        {
+          title: "Conversão de potência",
+          items: [
+            { label: "Regra", value: "1 W = 1000 mW" },
+            { label: "200 mW", value: "0,2 W" },
+            { label: "500 mW", value: "0,5 W" },
+          ],
+        },
+        {
+          title: "Cálculo do tempo",
+          items: [
+            { label: "Fórmula", value: "t = E ÷ P" },
+            { label: "Quando usar", value: "Quando já sabe os Joules e a potência" },
+            { label: "Exemplo", value: "4 J ÷ 0,2 W = 20 s" },
+            { label: "Resultado", value: "Aplicar por 20 segundos" },
+          ],
+        },
+      ],
+      extraTabs: [
+        {
+          key: "luzes",
+          label: "Luzes",
+          groups: [
+            {
+              title: "Luzes e ações",
+              items: [
+                {
+                  label: "Violeta",
+                  value: "370–450 nm: calmante, regeneradora, cicatrização e revitalização",
+                },
+                { label: "Azul", value: "450–495 nm: bactericida, anti-inflamatória e acne" },
+                {
+                  label: "Verde",
+                  value: "495–570 nm: clareamento de manchas e equilíbrio da pigmentação",
+                },
+                {
+                  label: "Amarela/âmbar",
+                  value: "570–620 nm: circulação, hidratação, luminosidade e peles sensíveis",
+                },
+                {
+                  label: "Vermelha",
+                  value: "620–750 nm: colágeno, elastina, rejuvenescimento e cicatrização",
+                },
+                {
+                  label: "Infravermelha",
+                  value: "750–1200 nm: regeneração profunda, analgesia e inflamações",
+                },
+              ],
+            },
+            {
+              title: "Indicações por cor",
+              items: [
+                {
+                  label: "Luz violeta",
+                  value: "Regeneração da pele, cicatrização e revitalização",
+                },
+                { label: "Luz azul", value: "Acne, ação bactericida e controle da oleosidade" },
+                { label: "Luz verde", value: "Clareamento de manchas e uniformização da pele" },
+                {
+                  label: "Luz amarela/âmbar",
+                  value: "Hidratação, circulação e sensibilidade da pele",
+                },
+                {
+                  label: "Luz vermelha",
+                  value: "Rejuvenescimento, colágeno, cicatrização e flacidez",
+                },
+                {
+                  label: "Luz infravermelha",
+                  value: "Analgesia, inflamação, regeneração profunda e dor muscular",
+                },
+              ],
+            },
+          ],
+        },
       ],
     },
   },
@@ -175,11 +285,7 @@ export const procedures: Procedure[] = [
         "Pular fase de aquecimento",
         "Não finalizar com drenagem",
       ],
-      contraindications: [
-        "Varizes calibrosas",
-        "Trombose",
-        "Inflamações agudas",
-      ],
+      contraindications: ["Varizes calibrosas", "Trombose", "Inflamações agudas"],
       parameters: [
         { label: "Duração", value: "45–60 min" },
         { label: "Pressão", value: "Moderada a profunda" },
@@ -226,11 +332,7 @@ export const procedures: Procedure[] = [
         "Pressão excessiva gerando lesão",
         "Não aplicar FPS no final",
       ],
-      contraindications: [
-        "Acne grau III/IV ativa",
-        "Rosácea em crise",
-        "Herpes ativo",
-      ],
+      contraindications: ["Acne grau III/IV ativa", "Rosácea em crise", "Herpes ativo"],
       parameters: [
         { label: "Camada emoliente em creme + gaze com emoliente líquido", value: "20min" },
         { label: "Máscara de tratamento", value: "10min" },
@@ -442,5 +544,9 @@ export const forgotOptions: { key: ForgotKey; label: string; hint: string }[] = 
   { key: "parametros", label: "Parâmetros", hint: "Frequência, intensidade, tempo" },
   { key: "tempo", label: "Tempo e Dose", hint: "Duração por área e energia recomendada (Joules)" },
   { key: "sequencia", label: "Sequência", hint: "Ordem das etapas" },
-  { key: "configuracao", label: "Ajustes e movimentos", hint: "Como ajustar o aparelho, manobras e direção" },
+  {
+    key: "configuracao",
+    label: "Ajustes e movimentos",
+    hint: "Como ajustar o aparelho, manobras e direção",
+  },
 ];

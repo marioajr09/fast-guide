@@ -15,6 +15,7 @@ import {
   Trash2,
   AlertTriangle,
   Ban,
+  Lightbulb,
   Sliders,
   ListChecks,
   BookOpen,
@@ -26,12 +27,13 @@ import { useCustomChecklist } from "@/store/custom-checklists";
 import { useFavorites } from "@/store/favorites";
 import { usePinnedChecklists } from "@/store/pinned-checklists";
 
-import type { VideoSource } from "@/data/procedures";
+import type { ParameterGroup, VideoSource } from "@/data/procedures";
 
-type Tab = "video" | "tutorial" | "checklist" | "errors" | "contra" | "params";
+type BaseTab = "video" | "tutorial" | "checklist" | "errors" | "contra" | "params";
+type Tab = BaseTab | string;
 type ProcedureSource = "checklists" | "favorites" | "search";
 
-const tabKeys: Tab[] = ["video", "tutorial", "checklist", "errors", "contra", "params"];
+const baseTabKeys: BaseTab[] = ["video", "tutorial", "checklist", "errors", "contra", "params"];
 const sourceKeys: ProcedureSource[] = ["checklists", "favorites", "search"];
 const QUICK_SHORTCUTS_OPEN_KEY = "esteti-quick-shortcuts-open";
 
@@ -52,8 +54,8 @@ export const Route = createFileRoute("/app/procedure/$id")({
     if (!proc) throw notFound();
     return { procId: proc.id };
   },
-  validateSearch: (search: Record<string, unknown>): { tab?: Tab; from?: ProcedureSource } => ({
-    tab: tabKeys.includes(search.tab as Tab) ? (search.tab as Tab) : undefined,
+  validateSearch: (search: Record<string, unknown>): { tab?: string; from?: ProcedureSource } => ({
+    tab: typeof search.tab === "string" ? search.tab : undefined,
     from: sourceKeys.includes(search.from as ProcedureSource)
       ? (search.from as ProcedureSource)
       : undefined,
@@ -66,7 +68,7 @@ export const Route = createFileRoute("/app/procedure/$id")({
   ),
 });
 
-const tabs: { key: Tab; label: string; icon: typeof Play }[] = [
+const baseTabs: { key: BaseTab; label: string; icon: typeof Play }[] = [
   { key: "video", label: "Vídeo", icon: Play },
   { key: "tutorial", label: "Tutorial", icon: BookOpen },
   { key: "checklist", label: "Checklist", icon: ListChecks },
@@ -74,6 +76,35 @@ const tabs: { key: Tab; label: string; icon: typeof Play }[] = [
   { key: "errors", label: "Erros", icon: AlertTriangle },
   { key: "contra", label: "Contraind.", icon: Ban },
 ];
+
+function ParameterGroupsView({ groups }: { groups: ParameterGroup[] }) {
+  return (
+    <div className="space-y-5">
+      {groups.map((group) => (
+        <section key={group.title || "default"}>
+          {group.title && (
+            <h3 className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">
+              {group.title}
+            </h3>
+          )}
+          <div className="divide-y divide-border">
+            {group.items.map((p) => (
+              <div
+                key={`${group.title}-${p.label}`}
+                className="grid gap-1 py-3 text-sm sm:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] sm:gap-4"
+              >
+                <span className="min-w-0 text-muted-foreground">{p.label}</span>
+                <span className="min-w-0 font-display font-semibold leading-relaxed text-foreground sm:text-right">
+                  {p.value}
+                </span>
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  );
+}
 
 function ProcedureVideo({
   video,
@@ -123,7 +154,19 @@ function ProcedurePage() {
   const { has: hasPinnedChecklist, toggle: togglePinnedChecklist } = usePinnedChecklists();
   const checklistPinned = hasPinnedChecklist(proc.id);
   const Icon = proc.icon;
-  const [tab, setTab] = useState<Tab>(search.tab ?? "video");
+  const extraTabs = proc.info.extraTabs ?? [];
+  const tabs = [
+    ...baseTabs,
+    ...extraTabs.map((extraTab) => ({
+      key: extraTab.key,
+      label: extraTab.label,
+      icon: Lightbulb,
+    })),
+  ];
+  const validTabKeys = tabs.map((item) => item.key);
+  const [tab, setTab] = useState<Tab>(
+    search.tab && validTabKeys.includes(search.tab) ? search.tab : "video",
+  );
   const [forgot, setForgot] = useState<ForgotKey | null>(null);
   const [checked, setChecked] = useState<Record<string, boolean>>({});
   const [editingChecklist, setEditingChecklist] = useState(false);
@@ -140,8 +183,9 @@ function ProcedurePage() {
   } = useCustomChecklist(proc.id, proc.info.checklist);
 
   useEffect(() => {
-    if (search.tab) setTab(search.tab);
-  }, [search.tab]);
+    if (!search.tab) return;
+    setTab(validTabKeys.includes(search.tab) ? search.tab : "video");
+  }, [search.tab, validTabKeys.join("|")]);
 
   useEffect(() => {
     localStorage.setItem(QUICK_SHORTCUTS_OPEN_KEY, String(quickShortcutsOpen));
@@ -413,7 +457,9 @@ function ProcedurePage() {
                         >
                           {on && <Check className="h-3.5 w-3.5" />}
                         </span>
-                        <span className={`flex-1 leading-relaxed ${on ? "text-muted-foreground line-through" : ""}`}>
+                        <span
+                          className={`flex-1 leading-relaxed ${on ? "text-muted-foreground line-through" : ""}`}
+                        >
                           {item.text}
                         </span>
                       </button>
@@ -426,25 +472,16 @@ function ProcedurePage() {
         )}
 
         {tab === "params" && (
-          <div className="space-y-5">
-            {(proc.info.parameterGroups ?? [{ title: "", items: proc.info.parameters }]).map((group) => (
-              <section key={group.title || "default"}>
-                {group.title && (
-                  <h3 className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">
-                    {group.title}
-                  </h3>
-                )}
-                <div className="divide-y divide-border">
-                  {group.items.map((p) => (
-                    <div key={`${group.title}-${p.label}`} className="flex items-center justify-between gap-4 py-3 text-sm">
-                      <span className="text-muted-foreground">{p.label}</span>
-                      <span className="shrink-0 text-right font-display font-semibold text-foreground">{p.value}</span>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            ))}
-          </div>
+          <ParameterGroupsView
+            groups={proc.info.parameterGroups ?? [{ title: "", items: proc.info.parameters }]}
+          />
+        )}
+
+        {extraTabs.map(
+          (extraTab) =>
+            tab === extraTab.key && (
+              <ParameterGroupsView key={extraTab.key} groups={extraTab.groups} />
+            ),
         )}
 
         {tab === "errors" && (
