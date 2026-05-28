@@ -193,7 +193,9 @@ function ProcedurePage() {
 
   const tabFromForgot = (k: ForgotKey): Tab => {
     if (k === "parametros" || k === "tempo") return "params";
-    if (k === "sequencia") return "checklist";
+    if (k === "sequencia") {
+      return extraTabs.some((extraTab) => extraTab.key === "sequencia") ? "sequencia" : "checklist";
+    }
     if (k === "configuracao") return "tutorial";
     return "tutorial";
   };

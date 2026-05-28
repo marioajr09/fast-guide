@@ -270,26 +270,189 @@ export const procedures: Procedure[] = [
         title: "Demonstração de massagem",
       },
       tutorial: [
-        "Aplique óleo ou creme de deslize uniformemente.",
-        "Inicie com manobras de deslizamento superficial.",
-        "Progrida para amassamento e percussão na área-alvo.",
+        "Avalie contraindicações e objetivos do paciente antes de iniciar.",
+        "Inicie abrindo os gânglios linfáticos, independentemente da técnica escolhida.",
+        "Comece pelas regiões proximais para preparar o caminho da linfa.",
+        "Siga o trajeto fisiológico da linfa em direção aos linfonodos correspondentes.",
+        "Use movimentos suaves, lentos, rítmicos e sem dor.",
+        "Finalize direcionando a linfa para os linfonodos correspondentes.",
       ],
       checklist: [
-        "Maca limpa",
-        "Óleo/creme em quantidade suficiente",
-        "Aquecimento prévio da musculatura",
-        "Drenagem ao final",
+        "Contraindicações avaliadas",
+        "Paciente confortável e posicionado",
+        "Linfonodos estimulados antes das manobras",
+        "Regiões proximais trabalhadas antes das distais",
+        "Pressão leve e superficial mantida",
+        "Ritmo lento, contínuo e repetido",
+        "Direção respeitando vasos linfáticos e linfonodos",
+        "Finalização com direcionamento da linfa",
       ],
       commonErrors: [
-        "Pressão excessiva causando hematoma",
-        "Pular fase de aquecimento",
-        "Não finalizar com drenagem",
+        "Utilizar pressão excessiva",
+        "Fazer movimentos rápidos",
+        "Não respeitar o sentido do fluxo linfático",
+        "Não iniciar pelas regiões proximais e linfonodos",
+        "Deixar a técnica dolorosa",
+        "Realizar manobras agressivas",
+        "Não avaliar contraindicações do paciente",
+        "Fazer movimentos sem ritmo e repetição adequada",
       ],
-      contraindications: ["Varizes calibrosas", "Trombose", "Inflamações agudas"],
+      contraindications: [
+        "Febre",
+        "Infecções agudas",
+        "Trombose",
+        "Insuficiência cardíaca descompensada",
+        "Câncer sem liberação médica",
+        "Hipotensão intensa",
+        "Processos inflamatórios agudos",
+        "Problemas renais graves",
+      ],
       parameters: [
+        { label: "Pressão", value: "Leve e superficial" },
+        { label: "Ritmo", value: "Lento, rítmico e contínuo" },
+        { label: "Direção", value: "Sentido dos vasos linfáticos e linfonodos" },
+        { label: "Repetições", value: "5–7 vezes por região" },
         { label: "Duração", value: "45–60 min" },
-        { label: "Pressão", value: "Moderada a profunda" },
-        { label: "Sentido", value: "Distal → proximal" },
+        { label: "Frequência", value: "1–3 vezes por semana" },
+      ],
+      parameterGroups: [
+        {
+          title: "Parâmetros gerais",
+          items: [
+            { label: "Pressão", value: "Leve, suave e superficial" },
+            { label: "Ritmo", value: "Lento, rítmico e contínuo" },
+            { label: "Direção", value: "Trajeto fisiológico da linfa até os linfonodos" },
+            { label: "Repetições", value: "5–7 vezes por região" },
+            { label: "Velocidade", value: "Aproximadamente 5–7 movimentos por minuto" },
+            { label: "Duração", value: "45–60 min" },
+            { label: "Frequência", value: "1–3 vezes por semana" },
+          ],
+        },
+        {
+          title: "Objetivos",
+          items: [
+            { label: "Edema", value: "Reduzir retenção de líquidos e inchaço" },
+            { label: "Circulação linfática", value: "Estimular o fluxo da linfa" },
+            { label: "Tecidos", value: "Eliminar toxinas e melhorar equilíbrio hídrico" },
+            { label: "Bem-estar", value: "Promover relaxamento e sensação de leveza" },
+          ],
+        },
+        {
+          title: "Indicações",
+          items: [
+            { label: "Retenção de líquidos", value: "Inchaço corporal e facial" },
+            { label: "Pós-operatório", value: "Cirurgias plásticas, conforme liberação" },
+            { label: "Celulite", value: "Fibroedema geloide" },
+            { label: "Gestantes", value: "Somente após liberação médica" },
+            { label: "Circulação", value: "Má circulação e pernas cansadas" },
+            { label: "Estética e bem-estar", value: "Relaxamento e equilíbrio dos tecidos" },
+          ],
+        },
+      ],
+      extraTabs: [
+        {
+          key: "metodos",
+          label: "Métodos",
+          groups: [
+            {
+              title: "Método Vodder",
+              items: [
+                { label: "Base", value: "Movimentos suaves, lentos e rítmicos" },
+                { label: "Pressão", value: "Leve e superficial" },
+                { label: "Ritmo", value: "Lento e contínuo" },
+                { label: "Direção", value: "Sentido dos vasos linfáticos e linfonodos" },
+                { label: "Repetições", value: "5–7 vezes por região" },
+                { label: "Duração", value: "45–60 min" },
+                { label: "Frequência", value: "1–3 vezes por semana" },
+              ],
+            },
+            {
+              title: "Movimentos do Vodder",
+              items: [
+                {
+                  label: "Círculos fixos",
+                  value: "Movimentos circulares suaves nos linfonodos para prepará-los",
+                },
+                {
+                  label: "Bombeamento",
+                  value: "Pressão leve e relaxamento para estimular a linfa",
+                },
+                { label: "Chamada", value: "Prepara os caminhos linfáticos para a drenagem" },
+                { label: "Reabsorção", value: "Direciona a linfa para os linfonodos" },
+                {
+                  label: "Movimento rotatório",
+                  value: "Movimentos amplos e suaves para estimular o fluxo linfático",
+                },
+              ],
+            },
+            {
+              title: "Método Leduc",
+              items: [
+                { label: "Pressão", value: "Leve e suave, sem dor ou hiperemia" },
+                { label: "Ritmo", value: "Lento, rítmico e contínuo" },
+                {
+                  label: "Direção",
+                  value: "Trajeto fisiológico da linfa em direção aos linfonodos",
+                },
+                { label: "Velocidade", value: "Aproximadamente 5–7 movimentos por minuto" },
+                { label: "Tempo", value: "45–60 min" },
+              ],
+            },
+            {
+              title: "Manobras do Leduc",
+              items: [
+                {
+                  label: "Captação",
+                  value: "Estimula a absorção da linfa pelos capilares linfáticos",
+                },
+                { label: "Evacuação", value: "Conduz a linfa pelos vasos linfáticos" },
+              ],
+            },
+          ],
+        },
+        {
+          key: "sequencia",
+          label: "Sequência",
+          groups: [
+            {
+              title: "Regra inicial",
+              items: [
+                {
+                  label: "1º passo",
+                  value: "Abrir os gânglios linfáticos, independentemente da técnica",
+                },
+                { label: "2º passo", value: "Iniciar as manobras para direcionamento da linfa" },
+              ],
+            },
+            {
+              title: "Sequência corporal",
+              items: [
+                { label: "Linfonodos", value: "Cervicais, axilares e inguinais" },
+                { label: "Regiões proximais", value: "Abdômen, coxas e braços" },
+                { label: "Regiões distais", value: "Pernas, pés e mãos" },
+                {
+                  label: "Finalização",
+                  value: "Direcionar a linfa para os linfonodos correspondentes",
+                },
+              ],
+            },
+            {
+              title: "Sequência facial",
+              items: [
+                { label: "1", value: "Estímulo dos linfonodos cervicais e supraclaviculares" },
+                { label: "2", value: "Drenagem do pescoço" },
+                { label: "3", value: "Região do queixo" },
+                { label: "4", value: "Bochechas" },
+                { label: "5", value: "Região dos olhos" },
+                { label: "6", value: "Testa" },
+                {
+                  label: "7",
+                  value: "Finalização direcionando a linfa para os gânglios cervicais",
+                },
+              ],
+            },
+          ],
+        },
       ],
     },
   },
