@@ -1,11 +1,15 @@
 import { useEffect, useState, useCallback } from "react";
+import { normalizeProcedureIds } from "@/data/procedures";
 
 const KEY = "esteti-favs";
 
 function read(): string[] {
   if (typeof window === "undefined") return [];
   try {
-    return JSON.parse(localStorage.getItem(KEY) ?? "[]");
+    const parsed = JSON.parse(localStorage.getItem(KEY) ?? "[]");
+    return Array.isArray(parsed)
+      ? normalizeProcedureIds(parsed.filter((item) => typeof item === "string"))
+      : [];
   } catch {
     return [];
   }

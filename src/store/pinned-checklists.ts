@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { normalizeProcedureIds } from "@/data/procedures";
 
 const KEY = "esteti-pinned-checklists";
 
@@ -6,7 +7,16 @@ function read(): string[] {
   if (typeof window === "undefined") return [];
   try {
     const parsed = JSON.parse(localStorage.getItem(KEY) ?? "[]");
-    return Array.isArray(parsed) ? parsed.filter((item) => typeof item === "string") : [];
+    if (!Array.isArray(parsed)) return [];
+
+    const myChecklistIds = parsed.filter(
+      (item): item is string => typeof item === "string" && item.startsWith("my:"),
+    );
+    const procedureIds = normalizeProcedureIds(
+      parsed.filter((item): item is string => typeof item === "string" && !item.startsWith("my:")),
+    );
+
+    return [...myChecklistIds, ...procedureIds];
   } catch {
     return [];
   }

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { normalizeProcedureRecord } from "@/data/procedures";
 
 const KEY = "esteti-custom-checklists";
 
@@ -13,7 +14,9 @@ function read(): StoredChecklists {
   if (typeof window === "undefined") return {};
   try {
     const parsed = JSON.parse(localStorage.getItem(KEY) ?? "{}");
-    return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed)
+      ? normalizeProcedureRecord(parsed as StoredChecklists)
+      : {};
   } catch {
     return {};
   }

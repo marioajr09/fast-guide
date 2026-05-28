@@ -20,9 +20,9 @@ import {
   ListChecks,
   BookOpen,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { VideoPlayer } from "@/components/VideoPlayer";
-import { procedures, forgotOptions, type ForgotKey } from "@/data/procedures";
+import { procedures, forgotOptions, findProcedureById, type ForgotKey } from "@/data/procedures";
 import { useCustomChecklist } from "@/store/custom-checklists";
 import { useFavorites } from "@/store/favorites";
 import { usePinnedChecklists } from "@/store/pinned-checklists";
@@ -61,7 +61,7 @@ function readClosedParameterGroups(storageKey: string) {
 
 export const Route = createFileRoute("/app/procedure/$id")({
   loader: ({ params }): { procId: string } => {
-    const proc = procedures.find((p) => p.id === params.id);
+    const proc = findProcedureById(params.id);
     if (!proc) throw notFound();
     return { procId: proc.id };
   },
@@ -188,16 +188,19 @@ function ProcedurePage() {
   const { has: hasPinnedChecklist, toggle: togglePinnedChecklist } = usePinnedChecklists();
   const checklistPinned = hasPinnedChecklist(proc.id);
   const Icon = proc.icon;
-  const extraTabs = proc.info.extraTabs ?? [];
-  const tabs = [
-    ...baseTabs,
-    ...extraTabs.map((extraTab) => ({
-      key: extraTab.key,
-      label: extraTab.label,
-      icon: Lightbulb,
-    })),
-  ];
-  const validTabKeys = tabs.map((item) => item.key);
+  const extraTabs = useMemo(() => proc.info.extraTabs ?? [], [proc.info.extraTabs]);
+  const tabs = useMemo(
+    () => [
+      ...baseTabs,
+      ...extraTabs.map((extraTab) => ({
+        key: extraTab.key,
+        label: extraTab.label,
+        icon: Lightbulb,
+      })),
+    ],
+    [extraTabs],
+  );
+  const validTabKeys = useMemo(() => tabs.map((item) => item.key), [tabs]);
   const [tab, setTab] = useState<Tab>(
     search.tab && validTabKeys.includes(search.tab) ? search.tab : "video",
   );
@@ -219,7 +222,7 @@ function ProcedurePage() {
   useEffect(() => {
     if (!search.tab) return;
     setTab(validTabKeys.includes(search.tab) ? search.tab : "video");
-  }, [search.tab, validTabKeys.join("|")]);
+  }, [search.tab, validTabKeys]);
 
   useEffect(() => {
     localStorage.setItem(QUICK_SHORTCUTS_OPEN_KEY, String(quickShortcutsOpen));

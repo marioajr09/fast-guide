@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { CircleHelp, ClipboardList, ListChecks, Plus } from "lucide-react";
-import { procedures, type Procedure } from "@/data/procedures";
+import { findProcedureById, procedures, type Procedure } from "@/data/procedures";
 import { useCustomChecklists, type ChecklistItem } from "@/store/custom-checklists";
 import { useMyChecklists, type MyChecklist } from "@/store/my-checklists";
 import { usePinnedChecklists } from "@/store/pinned-checklists";
@@ -109,7 +109,7 @@ function Checklists() {
         return checklist ? ({ type: "my", checklist } as const) : null;
       }
 
-      const procedure = procedures.find((item) => item.id === key);
+      const procedure = findProcedureById(key);
       if (!procedure) return null;
       return {
         type: "procedure",

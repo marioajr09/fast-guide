@@ -46,6 +46,7 @@ export type VideoSource =
 
 export interface Procedure {
   id: string;
+  legacyIds?: string[];
   name: string;
   icon: LucideIcon;
   tagline: string;
@@ -55,7 +56,8 @@ export interface Procedure {
 
 export const procedures: Procedure[] = [
   {
-    id: "corrente-russa",
+    id: "ultrassom",
+    legacyIds: ["corrente-russa"],
     name: "Ultrassom",
     icon: Zap,
     tagline: "Lipólise",
@@ -256,7 +258,8 @@ export const procedures: Procedure[] = [
     },
   },
   {
-    id: "massagem",
+    id: "drenagem-linfatica",
+    legacyIds: ["massagem"],
     name: "Drenagem Linfática",
     icon: Hand,
     tagline: "Desintoxicação e relaxamento",
@@ -740,6 +743,30 @@ export const procedures: Procedure[] = [
     },
   },
 ];
+
+export function resolveProcedureId(id: string) {
+  const procedure = procedures.find((item) => item.id === id || item.legacyIds?.includes(id));
+  return procedure?.id ?? null;
+}
+
+export function findProcedureById(id: string) {
+  const procedureId = resolveProcedureId(id);
+  return procedureId ? procedures.find((item) => item.id === procedureId) : undefined;
+}
+
+export function normalizeProcedureIds(ids: string[]) {
+  return Array.from(
+    new Set(ids.map((id) => resolveProcedureId(id) ?? id).filter((id) => id.length > 0)),
+  );
+}
+
+export function normalizeProcedureRecord<T>(record: Record<string, T>) {
+  return Object.entries(record).reduce<Record<string, T>>((normalized, [id, value]) => {
+    const procedureId = resolveProcedureId(id) ?? id;
+    if (!(procedureId in normalized)) normalized[procedureId] = value;
+    return normalized;
+  }, {});
+}
 
 export const forgotOptions: { key: ForgotKey; label: string; hint: string }[] = [
   { key: "parametros", label: "Parâmetros", hint: "Frequência, intensidade, tempo" },
