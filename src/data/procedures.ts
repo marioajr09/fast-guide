@@ -97,8 +97,8 @@ export const procedures: Procedure[] = [
       title: "LED Terapia",
       videoLength: "00:25",
       video: {
-        type: "local",
-        src: "/videos/terapia_led.mp4",
+        type: "youtube",
+        url: "https://www.youtube.com/watch?v=er5gAur_KlA",
         title: "Demonstração de Terapia LED",
       },
       tutorial: [
@@ -136,12 +136,12 @@ export const procedures: Procedure[] = [
   },
   {
     id: "massagem",
-    name: "Massagem",
+    name: "Drenagem Linfática",
     icon: Hand,
-    tagline: "Manual modeladora",
+    tagline: "Desintoxicação e relaxamento",
     color: "from-emerald-400 to-teal-600",
     info: {
-      title: "Massagem Modeladora",
+      title: "Drenagem Linfática",
       videoLength: "00:38",
       video: {
         type: "local",
