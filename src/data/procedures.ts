@@ -21,7 +21,6 @@ export interface ProcedureExtraTab {
 
 export interface QuickInfo {
   title: string;
-  videoLength: string;
   video?: VideoSource;
   tutorial: string[];
   checklist: string[];
@@ -63,7 +62,6 @@ export const procedures: Procedure[] = [
     color: "from-indigo-500 to-violet-600",
     info: {
       title: "Ultrassom",
-      videoLength: "00:32",
       video: {
         type: "youtube",
         url: "https://www.youtube.com/watch?v=Z84XlfAMfJ0",
@@ -116,7 +114,6 @@ export const procedures: Procedure[] = [
     color: "from-amber-400 to-pink-500",
     info: {
       title: "LED Terapia",
-      videoLength: "00:25",
       video: {
         type: "youtube",
         url: "https://www.youtube.com/watch?v=er5gAur_KlA",
@@ -266,7 +263,6 @@ export const procedures: Procedure[] = [
     color: "from-emerald-400 to-teal-600",
     info: {
       title: "Drenagem Linfática",
-      videoLength: "00:38",
       video: {
         type: "local",
         src: "/videos/massagem.mp4",
@@ -467,7 +463,6 @@ export const procedures: Procedure[] = [
     color: "from-sky-400 to-blue-600",
     info: {
       title: "Limpeza de Pele Profunda",
-      videoLength: "00:35",
       video: {
         type: "youtube",
         url: "https://www.youtube.com/watch?v=ZWxUxGPZ9EM",
@@ -514,7 +509,6 @@ export const procedures: Procedure[] = [
     color: "from-rose-400 to-fuchsia-600",
     info: {
       title: "Microagulhamento",
-      videoLength: "00:30",
       video: {
         type: "youtube",
         url: "https://www.youtube.com/watch?v=fcZ_l8hUGZ8",
@@ -644,7 +638,6 @@ export const procedures: Procedure[] = [
     color: "from-orange-400 to-red-600",
     info: {
       title: "Radiofrequência",
-      videoLength: "00:33",
       tutorial: [
         "Higienize a pele da área tratada.",
         "Aplique gel glicerinado e confira se há meio de deslizamento suficiente.",

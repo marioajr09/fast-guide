@@ -149,13 +149,7 @@ function ParameterGroupsView({
   );
 }
 
-function ProcedureVideo({
-  video,
-  fallbackLength,
-}: {
-  video?: VideoSource;
-  fallbackLength: string;
-}) {
+function ProcedureVideo({ video }: { video?: VideoSource }) {
   if (!video) {
     return (
       <div>
@@ -165,9 +159,6 @@ function ProcedureVideo({
               <Play className="h-7 w-7" fill="currentColor" />
             </div>
           </div>
-          <span className="absolute bottom-2 right-2 rounded-md bg-background/80 px-2 py-0.5 text-[11px] text-muted-foreground">
-            {fallbackLength}
-          </span>
         </div>
         <p className="mt-3 text-sm text-muted-foreground">
           Cadastre uma URL do YouTube ou um arquivo local para liberar o player nesta aula.
@@ -351,7 +342,7 @@ function ProcedurePage() {
       <div className="rounded-2xl border border-border bg-card p-4">
         {tab === "video" && (
           <div>
-            <ProcedureVideo video={proc.info.video} fallbackLength={proc.info.videoLength} />
+            <ProcedureVideo video={proc.info.video} />
             <p className="mt-3 text-sm text-muted-foreground">
               Vídeo curto demonstrando a técnica completa.
             </p>
