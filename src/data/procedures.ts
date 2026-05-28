@@ -39,17 +39,17 @@ export interface Procedure {
 export const procedures: Procedure[] = [
   {
     id: "corrente-russa",
-    name: "Corrente Russa",
+    name: "Ultrassom",
     icon: Zap,
-    tagline: "Correntes terapêuticas",
+    tagline: "Lipólise",
     color: "from-indigo-500 to-violet-600",
     info: {
-      title: "Corrente Russa",
+      title: "Ultrassom",
       videoLength: "00:32",
       video: {
-        type: "local",
-        src: "/videos/corrente-russa.mp4",
-        title: "Demonstração de Corrente Russa",
+        type: "youtube",
+        url: "https://www.youtube.com/watch?v=Z84XlfAMfJ0",
+        title: "Demonstração de Ultrassom",
       },
       tutorial: [
         "Higienize a área e posicione os eletrodos sobre o ventre muscular.",
@@ -74,10 +74,10 @@ export const procedures: Procedure[] = [
         "Epilepsia, trombose, câncer ativo",
       ],
       parameters: [
-        { label: "Frequência", value: "2.500 Hz" },
-        { label: "Burst", value: "50 Hz" },
-        { label: "Tempo ON/OFF", value: "4s / 8s" },
-        { label: "Sessão", value: "20–30 min" },
+        { label: "Intensidade", value: "3W/cm²" },
+        { label: "Modo", value: "Contínuo" },
+        { label: "Cálculo da área", value: "Altura x largura = ycm² (Região aplicada)" },
+        { label: "Tempo total", value: "ycm² ÷ ERA = min" },
       ],
     },
   },
