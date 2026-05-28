@@ -38,18 +38,18 @@ export interface Procedure {
 
 export const procedures: Procedure[] = [
   {
-    id: "eletroterapia",
-    name: "Eletroterapia",
+    id: "corrente-russa",
+    name: "Corrente Russa",
     icon: Zap,
     tagline: "Correntes terapêuticas",
     color: "from-indigo-500 to-violet-600",
     info: {
-      title: "Eletroterapia — Corrente Russa",
+      title: "Corrente Russa",
       videoLength: "00:32",
       video: {
         type: "local",
-        src: "/videos/eletroterapia.mp4",
-        title: "Demonstração de eletroterapia",
+        src: "/videos/corrente-russa.mp4",
+        title: "Demonstração de Corrente Russa",
       },
       tutorial: [
         "Higienize a área e posicione os eletrodos sobre o ventre muscular.",

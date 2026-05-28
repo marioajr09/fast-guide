@@ -146,7 +146,7 @@ function Landing() {
           <div className="mt-10 grid gap-4 md:grid-cols-3">
             {[
               { n: "01", t: "Toque em ‘Esqueci isso’", d: "Atalho em destaque na tela inicial." },
-              { n: "02", t: "Escolha o procedimento", d: "Eletroterapia, LED, RF, Microagulhamento e mais." },
+              { n: "02", t: "Escolha o procedimento", d: "Corrente Russa, LED, RF, Microagulhamento e mais." },
               { n: "03", t: "Resposta rápida", d: "Vídeos rápidos e orientações práticas em segundos." },
             ].map((s) => (
               <div key={s.n} className="rounded-2xl border border-border bg-background p-6">
