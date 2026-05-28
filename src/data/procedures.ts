@@ -3,6 +3,16 @@ import type { LucideIcon } from "lucide-react";
 
 export type ForgotKey = "parametros" | "tempo" | "sequencia" | "configuracao";
 
+export interface ParameterItem {
+  label: string;
+  value: string;
+}
+
+export interface ParameterGroup {
+  title: string;
+  items: ParameterItem[];
+}
+
 export interface QuickInfo {
   title: string;
   videoLength: string;
@@ -11,7 +21,8 @@ export interface QuickInfo {
   checklist: string[];
   commonErrors: string[];
   contraindications: string[];
-  parameters: { label: string; value: string }[];
+  parameters: ParameterItem[];
+  parameterGroups?: ParameterGroup[];
 }
 
 export type VideoSource =
@@ -236,35 +247,82 @@ export const procedures: Procedure[] = [
     info: {
       title: "Microagulhamento",
       videoLength: "00:30",
+      video: {
+        type: "youtube",
+        url: "https://www.youtube.com/watch?v=fcZ_l8hUGZ8",
+        title: "Demonstração de Microagulhamento",
+      },
       tutorial: [
-        "Antissepsia com clorexidina aquosa.",
-        "Aplicar anestésico tópico e aguardar 30–40 min.",
-        "Passar dermaroller/caneta em 4 direções até eritema uniforme.",
-        "Aplicar ativo permeável e máscara calmante.",
+        "Higienize a pele antes de iniciar o procedimento.",
+        "Realize antissepsia adequada da área tratada.",
+        "Aplique anestésico quando necessário e aguarde o tempo indicado.",
+        "Realize o microagulhamento com movimentos horizontais, verticais e diagonais.",
+        "Mantenha a pele tracionada, com pressão uniforme e controlada.",
+        "Movimentos: Horizontal, vertical e diagonal.",
+        "Não repetir excessivamente na mesma área.",
+        "Aplique drug delivery ou ativos indicados conforme o objetivo.",
+        "Finalize com orientações pós-procedimento.",
       ],
       checklist: [
         "Material estéril",
+        "Pele higienizada",
         "Antissepsia",
-        "Anestésico aplicado",
-        "Profundidade da agulha definida",
-        "Ativo de permeação",
-        "Pós: FPS rigoroso",
+        "Anestésico (se necessário)",
+        "Pele tracionada",
+        "Ativo de drug delivery selecionado",
+        "Orientações pós-procedimento passadas",
       ],
       commonErrors: [
-        "Reutilizar ponteira",
-        "Profundidade incorreta para a região",
-        "Aplicar ativo não indicado para permeação",
+        "Excesso de pressão",
+        "Sobrepor áreas",
+        "Fazer movimentos curvos",
+        "Não tracionar a pele",
+        "Levantar o aparelho em movimento",
+        "Usar cosméticos contaminados",
+        "Não respeitar intervalo entre sessões",
       ],
       contraindications: [
-        "Gestantes e lactantes",
-        "Isotretinoína recente (<6 meses)",
-        "Infecções ativas, queloides",
+        "Acne ativa",
+        "Infecção de pele",
+        "Rosácea ativa",
+        "Diabetes descompensada",
+        "Gravidez",
+        "Uso de isotretinoína (Roacutan)",
+        "Tendência a queloide",
+        "Câncer de pele",
+        "Distúrbios hemorrágicos",
+        "Uso de anticoagulantes",
+        "Alergia a metais",
       ],
       parameters: [
-        { label: "Face — rejuvenescimento", value: "0,5–1,0 mm" },
-        { label: "Estrias e cicatrizes", value: "1,5–2,0 mm" },
-        { label: "Couro cabeludo", value: "0,5–1,0 mm" },
-        { label: "Intervalo entre sessões", value: "30 dias" },
+        { label: "Face", value: "20–40 min" },
+        { label: "Couro cabeludo", value: "15–30 min" },
+        { label: "Estrias e cicatrizes", value: "10–20 min" },
+        { label: "Média de sessões (conforme objetivo)", value: "4-10" },
+      ],
+      parameterGroups: [
+        {
+          title: "Tempo e dose",
+          items: [
+            { label: "Face", value: "20–40 min" },
+            { label: "Couro cabeludo", value: "15–30 min" },
+            { label: "Estrias/cicatrizes", value: "10–20 min" },
+            { label: "Sessões", value: "4–10, conforme objetivo" },
+          ],
+        },
+        {
+          title: "Tamanho das agulhas",
+          items: [
+            { label: "Drug delivery", value: "0,25–0,50 mm" },
+            { label: "Rejuvenescimento", value: "0,50–1,0 mm" },
+            { label: "Melasma/manchas", value: "0,25–0,50 mm" },
+            { label: "Poros dilatados", value: "0,50–1,0 mm" },
+            { label: "Cicatriz de acne", value: "até 1,0 mm" },
+            { label: "Estrias", value: "1,5–2,5 mm" },
+            { label: "Couro cabeludo/alopecia", value: "0,5–1,5 mm" },
+            { label: "Flacidez corporal", value: "1,0–2,0 mm" },
+          ],
+        },
       ],
     },
   },

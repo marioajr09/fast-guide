@@ -426,12 +426,23 @@ function ProcedurePage() {
         )}
 
         {tab === "params" && (
-          <div className="divide-y divide-border">
-            {proc.info.parameters.map((p) => (
-              <div key={p.label} className="flex items-center justify-between py-3 text-sm">
-                <span className="text-muted-foreground">{p.label}</span>
-                <span className="font-display font-semibold text-foreground">{p.value}</span>
-              </div>
+          <div className="space-y-5">
+            {(proc.info.parameterGroups ?? [{ title: "", items: proc.info.parameters }]).map((group) => (
+              <section key={group.title || "default"}>
+                {group.title && (
+                  <h3 className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">
+                    {group.title}
+                  </h3>
+                )}
+                <div className="divide-y divide-border">
+                  {group.items.map((p) => (
+                    <div key={`${group.title}-${p.label}`} className="flex items-center justify-between gap-4 py-3 text-sm">
+                      <span className="text-muted-foreground">{p.label}</span>
+                      <span className="shrink-0 text-right font-display font-semibold text-foreground">{p.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </section>
             ))}
           </div>
         )}
