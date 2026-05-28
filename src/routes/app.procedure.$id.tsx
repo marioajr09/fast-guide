@@ -36,6 +36,7 @@ type ProcedureSource = "checklists" | "favorites" | "search";
 const baseTabKeys: BaseTab[] = ["video", "tutorial", "checklist", "errors", "contra", "params"];
 const sourceKeys: ProcedureSource[] = ["checklists", "favorites", "search"];
 const QUICK_SHORTCUTS_OPEN_KEY = "esteti-quick-shortcuts-open";
+const PARAMETER_GROUPS_CLOSED_KEY = "esteti-parameter-groups-closed";
 
 const backRoutes: Record<ProcedureSource, "/app/checklists" | "/app/favorites" | "/app/search"> = {
   checklists: "/app/checklists",
@@ -46,6 +47,16 @@ const backRoutes: Record<ProcedureSource, "/app/checklists" | "/app/favorites" |
 function readQuickShortcutsOpen() {
   if (typeof window === "undefined") return true;
   return localStorage.getItem(QUICK_SHORTCUTS_OPEN_KEY) !== "false";
+}
+
+function readClosedParameterGroups(storageKey: string) {
+  if (typeof window === "undefined") return {};
+
+  try {
+    return JSON.parse(localStorage.getItem(storageKey) ?? "{}") as Record<string, boolean>;
+  } catch {
+    return {};
+  }
 }
 
 export const Route = createFileRoute("/app/procedure/$id")({
@@ -77,24 +88,61 @@ const baseTabs: { key: BaseTab; label: string; icon: typeof Play }[] = [
   { key: "contra", label: "Contraind.", icon: Ban },
 ];
 
-function ParameterGroupsView({ groups }: { groups: ParameterGroup[] }) {
+function ParameterGroupsView({
+  groups,
+  storageScope,
+}: {
+  groups: ParameterGroup[];
+  storageScope: string;
+}) {
+  const storageKey = `${PARAMETER_GROUPS_CLOSED_KEY}:${storageScope}`;
+  const [closedGroups, setClosedGroups] = useState<Record<string, boolean>>(() =>
+    readClosedParameterGroups(storageKey),
+  );
+
+  useEffect(() => {
+    setClosedGroups(readClosedParameterGroups(storageKey));
+  }, [storageKey]);
+
+  useEffect(() => {
+    localStorage.setItem(storageKey, JSON.stringify(closedGroups));
+  }, [closedGroups, storageKey]);
+
   return (
     <div className="space-y-5">
       {groups.map((group) => (
         <section key={group.title || "default"}>
-          {group.title && (
-            <h3 className="mb-2 text-xs uppercase tracking-widest text-primary">{group.title}</h3>
+          {group.title ? (
+            <button
+              onClick={() =>
+                setClosedGroups((current) => ({
+                  ...current,
+                  [group.title]: !current[group.title],
+                }))
+              }
+              className="mb-2 flex min-h-8 w-full items-center justify-between gap-3 text-left"
+              aria-expanded={!closedGroups[group.title]}
+            >
+              <span className="text-xs uppercase tracking-widest text-primary">{group.title}</span>
+              {closedGroups[group.title] ? (
+                <ChevronDown className="h-4 w-4 shrink-0 text-primary" />
+              ) : (
+                <ChevronUp className="h-4 w-4 shrink-0 text-primary" />
+              )}
+            </button>
+          ) : null}
+          {!closedGroups[group.title] && (
+            <div className="divide-y divide-border">
+              {group.items.map((p) => (
+                <div key={`${group.title}-${p.label}`} className="grid gap-1 py-3 text-sm">
+                  <span className="min-w-0 text-muted-foreground">{p.label}</span>
+                  <span className="min-w-0 font-display font-semibold leading-relaxed text-foreground">
+                    {p.value}
+                  </span>
+                </div>
+              ))}
+            </div>
           )}
-          <div className="divide-y divide-border">
-            {group.items.map((p) => (
-              <div key={`${group.title}-${p.label}`} className="grid gap-1 py-3 text-sm">
-                <span className="min-w-0 text-muted-foreground">{p.label}</span>
-                <span className="min-w-0 font-display font-semibold leading-relaxed text-foreground">
-                  {p.value}
-                </span>
-              </div>
-            ))}
-          </div>
         </section>
       ))}
     </div>
@@ -192,7 +240,9 @@ function ProcedurePage() {
       return extraTabs.some((extraTab) => extraTab.key === "sequencia") ? "sequencia" : "checklist";
     }
     if (k === "configuracao") {
-      return extraTabs.some((extraTab) => extraTab.key === "movimentos") ? "movimentos" : "tutorial";
+      return extraTabs.some((extraTab) => extraTab.key === "movimentos")
+        ? "movimentos"
+        : "tutorial";
     }
     return "tutorial";
   };
@@ -473,13 +523,18 @@ function ProcedurePage() {
         {tab === "params" && (
           <ParameterGroupsView
             groups={proc.info.parameterGroups ?? [{ title: "", items: proc.info.parameters }]}
+            storageScope={`${proc.id}:params`}
           />
         )}
 
         {extraTabs.map(
           (extraTab) =>
             tab === extraTab.key && (
-              <ParameterGroupsView key={extraTab.key} groups={extraTab.groups} />
+              <ParameterGroupsView
+                key={extraTab.key}
+                groups={extraTab.groups}
+                storageScope={`${proc.id}:${extraTab.key}`}
+              />
             ),
         )}
 
