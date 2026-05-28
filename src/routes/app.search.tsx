@@ -45,6 +45,11 @@ function SearchPage() {
           p.tagline,
           p.info.title,
           ...p.info.parameters.map((x) => `${x.label} ${x.value}`),
+          ...(p.info.parameterGroups ?? []).flatMap((group) => [
+            group.title,
+            ...group.items.map((item) => `${item.label} ${item.value}`),
+          ]),
+          ...p.info.tutorial,
           ...(customChecklist ? customChecklist.map((item) => item.text) : p.info.checklist),
           ...p.info.commonErrors,
           ...p.info.contraindications,
