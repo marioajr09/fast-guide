@@ -402,10 +402,10 @@ function ProcedurePage() {
                     <li key={item.id}>
                       <button
                         onClick={() => setChecked((c) => ({ ...c, [item.id]: !c[item.id] }))}
-                        className="flex w-full items-center gap-3 rounded-xl border border-border bg-background p-3 text-left text-sm"
+                        className="flex w-full items-start gap-3 rounded-xl border border-border bg-background p-3 text-left text-sm"
                       >
                         <span
-                          className={`grid h-5 w-5 place-items-center rounded-md border transition ${
+                          className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-md border transition ${
                             on
                               ? "border-primary bg-primary text-primary-foreground"
                               : "border-border bg-card"
@@ -413,7 +413,7 @@ function ProcedurePage() {
                         >
                           {on && <Check className="h-3.5 w-3.5" />}
                         </span>
-                        <span className={on ? "text-muted-foreground line-through" : ""}>
+                        <span className={`flex-1 leading-relaxed ${on ? "text-muted-foreground line-through" : ""}`}>
                           {item.text}
                         </span>
                       </button>
