@@ -641,6 +641,11 @@ export const procedures: Procedure[] = [
     color: "from-orange-400 to-red-600",
     info: {
       title: "Radiofrequência",
+      video: {
+        type: "local",
+        src: "/videos/radiofrequencia.mp4",
+        title: "Demonstração de radiofrequência",
+      },
       tutorial: [
         "Higienize a pele da área tratada.",
         "Aplique gel glicerinado e confira se há meio de deslizamento suficiente.",
