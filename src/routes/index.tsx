@@ -6,7 +6,11 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Fast Guide - Guia Técnico para Estética" },
-      { name: "description", content: "Consulta técnica instantânea durante procedimentos estéticos. Microlearning para alunos e profissionais de Estética e Cosmetologia." },
+      {
+        name: "description",
+        content:
+          "Consulta técnica instantânea durante procedimentos estéticos. Microlearning para alunos e profissionais de Estética e Cosmetologia.",
+      },
       { property: "og:title", content: "Fast Guide - Guia técnico de bolso" },
       { property: "og:description", content: "Menos tempo procurando. Mais segurança executando." },
     ],
@@ -28,9 +32,15 @@ function Landing() {
             <span className="font-display text-lg font-semibold tracking-tight">Fast Guide</span>
           </Link>
           <nav className="hidden gap-8 text-sm text-muted-foreground md:flex">
-            <a href="#problema" className="hover:text-foreground">Problema</a>
-            <a href="#como-funciona" className="hover:text-foreground">Como funciona</a>
-            <a href="#categorias" className="hover:text-foreground">Categorias</a>
+            <a href="#problema" className="hover:text-foreground">
+              Problema
+            </a>
+            <a href="#como-funciona" className="hover:text-foreground">
+              Como funciona
+            </a>
+            <a href="#categorias" className="hover:text-foreground">
+              Categorias
+            </a>
           </nav>
         </div>
       </header>
@@ -40,12 +50,12 @@ function Landing() {
         <div className="absolute inset-0 bg-hero-glow" />
         <div className="relative mx-auto max-w-6xl px-5 pb-12 pt-12 md:pt-12">
           <div className="mx-auto max-w-3xl text-center">
-            <h1 className="mt-6 font-display text-3xl font-semibold leading-[1.08] tracking-tight sm:text-4xl md:text-6xl">
+            <h1 className="mt-6 font-display text-3xl font-semibold leading-[1.18] tracking-tight sm:text-4xl sm:leading-[1.12] md:text-6xl md:leading-[1.05]">
               <span className="block sm:inline">Menos tempo</span>{" "}
               <span className="block sm:inline">procurando.</span>
               <br />
-              <span className="block text-gradient sm:inline">Mais segurança</span>{" "}
-              <span className="block text-gradient sm:inline">executando.</span>
+              <span className="block pb-1 text-gradient sm:inline">Mais segurança</span>{" "}
+              <span className="block pb-1 text-gradient sm:inline">executando.</span>
             </h1>
             <p className="mx-auto mt-6 max-w-[19rem] text-sm leading-relaxed text-muted-foreground sm:max-w-xl sm:text-base md:mt-7 md:text-xl">
               A informação certa, no momento em que você precisa.
@@ -175,8 +185,12 @@ function Landing() {
       <section id="categorias" className="mx-auto max-w-6xl px-5 py-10 md:py-16">
         <div className="flex items-end justify-between gap-4">
           <div>
-            <span className="text-xs uppercase tracking-widest text-muted-foreground">Categorias</span>
-            <h2 className="mt-3 font-display text-3xl font-semibold md:text-4xl">Tudo que você usa na prática.</h2>
+            <span className="text-xs uppercase tracking-widest text-muted-foreground">
+              Categorias
+            </span>
+            <h2 className="mt-3 font-display text-3xl font-semibold md:text-4xl">
+              Tudo que você usa na prática.
+            </h2>
           </div>
           <Link
             to="/app"
@@ -194,7 +208,9 @@ function Landing() {
                 className="flex items-center rounded-2xl border border-border bg-card p-5 transition hover:bg-card/60"
               >
                 <div className="flex items-center gap-4">
-                  <div className={`grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br ${p.color} text-white`}>
+                  <div
+                    className={`grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br ${p.color} text-white`}
+                  >
                     <Icon className="h-5 w-5" />
                   </div>
                   <div>
