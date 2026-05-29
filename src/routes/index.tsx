@@ -129,8 +129,8 @@ function Landing() {
           </div>
           <ul className="space-y-3">
             {[
-              "Esqueceu a frequência da Corrente Russa.",
-              "Não lembra a profundidade da agulha para estrias.",
+              "Esqueceu os parâmetros do Ultrassom.",
+              "Não lembra o tempo de aplicação do LED.",
               "Dúvida sobre a temperatura alvo da Radiofrequência.",
               "Precisa do checklist da Limpeza de Pele agora.",
             ].map((q) => (
@@ -159,11 +159,11 @@ function Landing() {
           </div>
           <div className="mt-10 grid gap-4 md:grid-cols-3">
             {[
-              { n: "01", t: "Toque em ‘Esqueci isso’", d: "Atalho em destaque na tela inicial." },
+              { n: "01", t: "Toque em ‘Abrir App’", d: "Entre no guia pelo botão principal da página." },
               {
                 n: "02",
                 t: "Escolha o procedimento",
-                d: "Corrente Russa, LED, RF, Microagulhamento e mais.",
+                d: "Ultrassom, LED, Limpeza de Pele, Microagulhamento e mais.",
               },
               {
                 n: "03",
