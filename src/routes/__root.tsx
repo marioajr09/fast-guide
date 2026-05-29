@@ -73,20 +73,43 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Fast Guide" },
-      { name: "description", content: "Consulta técnica instantânea durante procedimentos estéticos. Microlearning para alunos e profissionais de Estética e Cosmetologia." },
+      {
+        name: "description",
+        content:
+          "Consulta técnica instantânea durante procedimentos estéticos. Microlearning para alunos e profissionais de Estética e Cosmetologia.",
+      },
       { name: "author", content: "Fast Guide" },
       { property: "og:title", content: "Fast Guide" },
-      { property: "og:description", content: "Consulta técnica instantânea durante procedimentos estéticos." },
+      {
+        property: "og:description",
+        content: "Consulta técnica instantânea durante procedimentos estéticos.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@fastguide" },
       { name: "twitter:title", content: "Fast Guide" },
-      { name: "twitter:description", content: "Consulta técnica instantânea durante procedimentos estéticos." },
+      {
+        name: "twitter:description",
+        content: "Consulta técnica instantânea durante procedimentos estéticos.",
+      },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        href: "/favicon.png?v=3",
+      },
+      {
+        rel: "shortcut icon",
+        href: "/favicon.png?v=3",
+      },
+      {
+        rel: "apple-touch-icon",
+        href: "/favicon.png?v=3",
       },
     ],
   }),
