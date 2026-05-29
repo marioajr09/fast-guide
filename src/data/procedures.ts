@@ -268,8 +268,8 @@ export const procedures: Procedure[] = [
       title: "Drenagem Linfática",
       video: {
         type: "local",
-        src: "/videos/massagem.mp4",
-        title: "Demonstração de massagem",
+        src: "/videos/drenagem.mp4",
+        title: "Demonstração de drenagem linfática",
       },
       tutorial: [
         "Avalie contraindicações e objetivos do paciente antes de iniciar.",
