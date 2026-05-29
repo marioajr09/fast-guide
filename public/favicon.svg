@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Fast Guide">
+  <defs>
+    <linearGradient id="fast-guide-bg" x1="10" y1="12" x2="54" y2="54" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5590ff" />
+      <stop offset="0.55" stop-color="#797cf8" />
+      <stop offset="1" stop-color="#a97bff" />
+    </linearGradient>
+  </defs>
+
+  <circle cx="32" cy="32" r="29" fill="url(#fast-guide-bg)" />
+
+  <g fill="none" stroke="#070716" stroke-linecap="round" stroke-linejoin="round">
+    <path
+      d="M22 18h17.5a4.5 4.5 0 0 1 4.5 4.5V43a4.5 4.5 0 0 1-4.5 4.5H22A4.5 4.5 0 0 1 17.5 43V22.5A4.5 4.5 0 0 1 22 18Z"
+      stroke-width="3.2"
+    />
+    <path
+      d="M26 18c.7-3 3-5 6-5s5.3 2 6 5h2.5v6.5h-17V18H26Z"
+      stroke-width="3.2"
+    />
+
+    <path d="M31 27h9M31 34h9M31 41h8" stroke-width="3.2" />
+    <path d="M24.5 27h.1M24.5 34h.1M24.5 41h.1" stroke-width="3.8" />
+
+    <path
+      d="M47 34l2.8 6.2L56 43l-6.2 2.8L47 52l-2.8-6.2L38 43l6.2-2.8L47 34Z"
+      stroke-width="3.2"
+    />
+    <path
+      d="M54 24l1.4 3.2L59 28.5l-3.6 1.3L54 33l-1.4-3.2-3.6-1.3 3.6-1.3L54 24Z"
+      stroke-width="2.3"
+    />
+    <circle cx="39" cy="52" r="2.3" stroke-width="2.8" />
+  </g>
+</svg>
