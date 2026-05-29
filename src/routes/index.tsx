@@ -78,7 +78,7 @@ function Landing() {
           </div>
 
           {/* Mock phone */}
-          <div className="mx-auto mt-14 max-w-[280px] md:max-w-xs">
+          <div className="mx-auto mt-14 max-w-[280px] sm:max-w-xs md:max-w-sm lg:max-w-[26rem]">
             <div className="relative rounded-[2.5rem] border border-border bg-card p-3 shadow-card">
               <div className="rounded-[2rem] bg-background p-5">
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
