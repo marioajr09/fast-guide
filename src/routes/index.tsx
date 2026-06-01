@@ -236,7 +236,7 @@ function Landing() {
             Seu guia técnico de bolso.
           </h3>
           <p className="mx-auto mt-2 max-w-lg text-sm opacity-80 sm:mt-3 sm:text-base md:text-lg">
-            Comece agora — [INCLUIR VALOR!!!]
+            Comece grátis. Desbloqueie recursos avançados no Premium.
           </p>
           <Link
             to="/app"
@@ -244,6 +244,67 @@ function Landing() {
           >
             Abrir o app <ArrowRight className="h-4 w-4" />
           </Link>
+        </div>
+      </section>
+
+      {/* Planos */}
+      <section className="mx-auto max-w-5xl px-5 pb-12 md:pb-16">
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="rounded-2xl border border-border bg-card p-6 shadow-card">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <span className="text-xs uppercase tracking-widest text-muted-foreground">
+                  Plano inicial
+                </span>
+                <h3 className="mt-2 font-display text-2xl font-semibold">Grátis</h3>
+              </div>
+              <span className="rounded-full border border-border bg-background px-3 py-1 text-xs text-muted-foreground">
+                Básico
+              </span>
+            </div>
+            <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
+              {[
+                "Consulta aos procedimentos básicos",
+                "Acesso aos checklists padrão",
+                "Busca rápida",
+                "Vídeos/tutoriais básicos",
+              ].map((item) => (
+                <li key={item} className="flex gap-3">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="relative overflow-hidden rounded-2xl border border-primary/60 bg-card p-6 shadow-glow">
+            <div className="absolute inset-x-0 top-0 h-1 bg-gradient-primary" />
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <span className="text-xs uppercase tracking-widest text-primary">
+                  Plano avançado
+                </span>
+                <h3 className="mt-2 font-display text-2xl font-semibold">Premium</h3>
+              </div>
+              <span className="rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs text-primary">
+                Completo
+              </span>
+            </div>
+            <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
+              {[
+                "Editar checklists",
+                "Criar checklists próprios",
+                "Fixar/organizar checklists",
+                "Personalizar procedimentos",
+                "Futuras atualizações/protocolos revisados",
+              ].map((item) => (
+                <li key={item} className="flex gap-3">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 
